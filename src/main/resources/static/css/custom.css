@@ -1,0 +1,16 @@
+body {
+	font-family: 'Raleway', sans-serif;
+	background-color: #eee;
+}
+
+.body {
+	padding-top: 70px;
+}
+
+div.torn {
+    background-image: url('../img/torn.gif');
+	width:500px;
+    height:500px;
+	padding: 0px;
+	border: 1px dashed red;
+}

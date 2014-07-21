@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head id="head">
+		<title>spring-boot-base|about</title>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<meta name="description" content=""/>
+		<meta name="author" content=""/>
+		<!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+		<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet"/>
+		<link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"/>
+		<link href="http://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css"/>
+		<link href="/static/css/custom.css" rel="stylesheet" type="text/css"/>
+		<link href='http://fonts.googleapis.com/css?family=Meddon' rel='stylesheet' type='text/css'>
+		<style>html, body {background: url('/static/img/2.jpg') no-repeat center center fixed;}</style>
+	</head>
+	<body id="body">
+
+		<!-- navbar -->
+		<div id="navbar" class="navbar navbar-default navbar-static-top navbar-inverse">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#">Fan The Flame Dates</a>
+				</div>
+				<div class="collapse navbar-collapse navbar-ex1-collapse">
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+							<a href="/list/video">Videos</a>
+						</li>
+						<li>
+							<a href="#">Forum</a>
+						</li>
+						<li>
+							${(auth)?string('<a href="/register">Register</a>', '<a href="/user/account">My Account</a>')}
+						</li>
+						<li>
+							${(auth)?string('<a href="/user">Login</a>', '<a href="/logout">Logout</a>')}
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<div id="content" class="container">
+			${(msg)! ""}
+			<div class="col-sm-12" >
+				<div class="row well well-lg trans" >
+					<div class="col-sm-10 col-sm-offset-1">
+						<h1 class="col-sm-offset-1">About</h1>
+						<h3><strong>Q:</strong>  Who is Fan the Flame Dates?</h3>
+						<h3><strong>A:</strong>  House on the Rock Family Ministries!</h3>
+						<strong>
+							<p>
+								We are a Christian ministry committed to helping the Church start and strengthen her ministries
+								to men, marriages, and families so that they reflect the unconditional love of God to the world.
+							</p>
+							<p>
+								We believe strong families build strong churches and communities and that strong families are
+								nurtured by a healthy marriages!  That is why we have launched these FAN THE FLAME DATES … to
+								help you strengthen your marriage!
+							</p>
+							<p>
+								We present over 100 Biblically-based family life workshops a year … and have ministered to over
+								70,000 families … we’d love to serve your church …
+							</p>
+							<p>
+								Please visit our main website, www.hotrfm.org, for more information.
+							</p>
+						</strong>
+						<h3><strong>Q:</strong>  How Can I Promote "Fan the Flame Dates" at my church?</h3>
+						<h3><strong>A:</strong>  Click here for our Promotional Items Page</h3>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- footer -->
+		<div id="navbar" class="navbar navbar-default navbar-fixed-bottom navbar-inverse">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+				</div>
+				<div class="collapse navbar-collapse navbar-ex1-collapse">
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+							<a href="#">Live Events</a>
+						</li>
+						<li>
+							<a href="/donate">Donate Today</a>
+						</li>
+						<li>
+							<a href="/home">Home</a>
+						</li>
+						<li>
+							<a href="/contact">Contact</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<!-- scripts -->
+		<div id="scripts">
+			<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+			<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+		</div>
+	</body>
+</html>

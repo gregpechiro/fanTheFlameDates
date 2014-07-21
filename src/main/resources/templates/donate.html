@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head id="head">
+		<title>spring-boot-base|about</title>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<meta name="description" content=""/>
+		<meta name="author" content=""/>
+		<!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+		<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet"/>
+		<link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"/>
+		<link href="http://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css"/>
+		<link href="/static/css/custom.css" rel="stylesheet" type="text/css"/>
+		<link href='http://fonts.googleapis.com/css?family=Meddon' rel='stylesheet' type='text/css'>
+		<style>html, body {background: url('/static/img/2.jpg') no-repeat center center fixed;}</style>
+	</head>
+	<body id="body">
+
+		<!-- navbar -->
+		<div id="navbar" class="navbar navbar-default navbar-static-top navbar-inverse">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#">Fan The Flame Dates</a>
+				</div>
+				<div class="collapse navbar-collapse navbar-ex1-collapse">
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+							<a href="/list/video">Videos</a>
+						</li>
+						<li>
+							<a href="#">Forum</a>
+						</li>
+						<li>
+							${(auth)?string('<a href="/register">Register</a>', '<a href="/user/account">My Account</a>')}
+						</li>
+						<li>
+							${(auth)?string('<a href="/user">Login</a>', '<a href="/logout">Logout</a>')}
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<div id="content" class="container">
+			${(msg)! ""}
+			<div class="col-sm-12" >
+				<div class="row well well-lg trans" >
+					<div class="col-sm-10 col-sm-offset-1">
+						<h1 class="col-sm-offset-1">Donate Today</h1>
+						<h3><strong>Q:</strong>  How is "Fan the Flame Dates" funded?</h3>
+						<h3><strong>A:</strong>  Through generous donations from supporters like YOU!</h3>
+						<strong>
+							<p>
+								"Fan the Flame Dates" is a ministry of House on the Rock Family Ministries
+								(www.hotrfm.org).
+							</p>
+							<p>
+								75% of our support comes from gifts from our generous supporters.  The additional 25%
+								comes from speaking fees generated from our "live" talks with groups.
+							</p>
+							<button class="btn btn-primary">Paypal</button>
+							<br><br>
+							<p>
+								Thank you for donating today and making an investment in marriages!!
+							</p>
+						</strong>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- footer -->
+		<div id="navbar" class="navbar navbar-default navbar-fixed-bottom navbar-inverse">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+				</div>
+				<div class="collapse navbar-collapse navbar-ex1-collapse">
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+							<a href="#">Live Events</a>
+						</li>
+						<li>
+							<a href="/home">Home</a>
+						</li>
+						<li>
+							<a href="/about">About Us</a>
+						</li>
+						<li>
+							<a href="/contact">Contact</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<!-- scripts -->
+		<div id="scripts">
+			<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+			<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+		</div>
+	</body>
+</html>

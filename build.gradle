@@ -1,0 +1,56 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+
+buildscript {
+	
+	ext {
+		springBootVersion = "1.1.1.RELEASE"
+	}
+	
+	repositories {
+		mavenCentral()
+	}
+	
+	dependencies {
+		classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+	}
+}
+
+jar {
+
+	baseName = "houseontherock"
+
+    manifest {
+		attributes "Class-Path" : "."
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	
+	// spring security
+	compile 'org.springframework.security:spring-security-web:3.2.4.RELEASE'
+	compile 'org.springframework.security:spring-security-config:3.2.4.RELEASE'
+	
+	// spring
+    compile "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
+	compile "org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}"
+	compile "org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}"
+	compile "org.springframework.boot:spring-boot-starter-freemarker:${springBootVersion}"
+
+	// hibernate
+	compile "org.hibernate:hibernate-entitymanager:4.3.5.Final"
+	compile "org.hibernate:hibernate-validator:5.1.1.Final"
+
+	// database
+	compile "mysql:mysql-connector-java:5.1.30"
+	runtime "com.h2database:h2:1.4.178"
+
+    // emailer
+    compile "javax.mail:mail:1.4.7"
+
+}
