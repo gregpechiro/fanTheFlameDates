@@ -1,4 +1,4 @@
-spring-boot-base
+Fan The Flame Dates
 ================
 
-Base project/template using spring boot and bootstrap and freemarker. Already includes security setup and embedded h2 database.
+Base setup for fan the flame dates
