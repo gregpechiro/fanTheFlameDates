@@ -2,13 +2,13 @@
 <html lang="en">
 	<head id="head">
 		<title>spring-boot-base|list</title>
-		<meta charset="utf-8"/>	
+		<meta charset="utf-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 		<meta name="description" content=""/>
 		<meta name="author" content=""/>
-		<!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->  
+		<!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 		<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet"/>
-		<link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"/>		
+		<link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"/>
 		<link href="http://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css"/>
 		<link href="/static/css/custom.css" rel="stylesheet" type="text/css"/>
 	</head>
@@ -17,10 +17,10 @@
 		<!-- navbar -->
 		<div id="navbar" class="navbar navbar-default navbar-static-top navbar-inverse">
 			<div class="container">
-		        <div class="navbar-header">
-		            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-		                <span class="sr-only">Toggle navigation</span>
-			            <span class="icon-bar"></span>
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
@@ -37,55 +37,54 @@
 		</div>
 
 		<div id="content" class="container">
-		    <div id="tableDiv" class="col-sm-12" >
-		        <div id="tablePanel" class="panel panel-default">
-		        	<div class="panel-heading col-sm-12">
-						Videos
-						<a href="/admin/video/upload" class="btn btn-default btn-xs pull-right">Add Video</a>
+			${(msg)!}
+			<div id="tablePanel" class="panel panel-default">
+				<div class="panel-heading col-sm-12">
+					Videos
+					<a href="/admin/video/upload" class="btn btn-default btn-xs pull-right">Add Video</a>
+				</div>
+				<div class="panel-body">
+					<div id="table" class="table-responsive">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>Name</th>
+									<th>URI</th>
+									<th>Description</th>
+									<th>Link</th>
+									<th>Tags</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								<#list videos.data as video>
+									<tr>
+										<td>${video.name}</td>
+										<td>${video.uri}</td>
+										<td>${(video.description)!}</td>
+										<td><a href="${video.link}" id="" class="">Watch</a></td>
+										<td>
+											<#assign tags =[] />
+											<#list video.tags as tag>
+												<#assign tags = tags + [tag.name] />
+											</#list>
+											${tags?join(', ')}
+										</td>
+										<td><a href="/admin/video/view?video_uri=${video.uri}">Edit</a></td>
+									</tr>
+								</#list>
+							</tbody>
+						</table>
 					</div>
-		        	<div class="panel-body">
-		        		<div id="table" class="table-responsive">
-		        			 <table class="table table-striped">
-		        				<thead>
-		        					<tr>
-		        						<th>Name</th>
-		        						<th>URI</th>
-		        						<th>Description</th>
-		        						<th>Link</th>
-		        						<th>Tags</th>
-										<th></th>
-		        					</tr>
-		        				</thead>
-		        				<tbody>
-		        					<#list videos.data as video>
-										<tr>
-											<td>${video.name}</td>
-											<td>${video.uri}</td>
-											<td>${(video.description)!}</td>
-											<td><a href="${video.link}" id="" class="">Watch</a></td>
-											<td>
-												<#assign tags =[] />
-												<#list video.tags as tag>
-													<#assign tags = tags + [tag.name] />
-												</#list>
-												${tags?join(', ')}
-											</td>
-											<td><a href="/admin/video/view?video_uri=${video.uri}">Edit</a></td>
-										</tr>
-									</#list>
-		        				</tbody>
-		        			</table>
-		        		</div>
-		        	</div>
-		        </div>
-		    </div>
+				</div>
+			</div>
 		</div>
-		
+
 
 		<!-- scripts -->
 		<div id="scripts">
 			<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-			<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>		
+			<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 		</div>
 	</body>
 </html>

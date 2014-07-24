@@ -41,7 +41,7 @@
 		        	<div class="panel-heading">Video</div>
 		        	<div class="panel-body">
 						<label>Thumbnail</label>
-						<img src="${video.pictures.sizes?last.link}" class="img-responsive" alt="Video Thumbnail">
+						<img src="${(video.pictures.sizes?last.link)!}" class="img-responsive" alt="Video Thumbnail">
 		        	    <br>
 						<form id="videoForm" role="form" method="post" action="/admin/video">
 		        			<div class="form-group">

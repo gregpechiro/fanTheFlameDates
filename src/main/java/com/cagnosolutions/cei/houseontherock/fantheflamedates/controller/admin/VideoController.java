@@ -69,7 +69,7 @@ public class VideoController {
 	public String upload(Model model) {
 		try {
 			VimeoAPI vimeo = new VimeoAPI();
-			model.addAttribute("upload", vimeo.postInfo("https://api.vimeo.com/me/videos", "redirect_url=localhost:8080/admin/video/temp"));
+			model.addAttribute("upload", vimeo.postInfo("https://api.vimeo.com/me/videos", "redirect_url=localhost:8080/admin/video/view"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
