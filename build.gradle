@@ -53,4 +53,5 @@ dependencies {
     // emailer
     compile "javax.mail:mail:1.4.7"
 
+    compile "org.apache.httpcomponents:httpclient:4.3.4"
 }

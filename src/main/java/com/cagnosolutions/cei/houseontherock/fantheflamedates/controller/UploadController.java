@@ -1,6 +1,7 @@
 package com.cagnosolutions.cei.houseontherock.fantheflamedates.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,9 +17,16 @@ import java.io.FileOutputStream;
 public class UploadController {
 
 	@RequestMapping(method=RequestMethod.GET)
-	public String getUpload() {
+	public String getUpload(Model model) {
 		return "upload";
 	}
+
+	@RequestMapping("/test")
+	@ResponseBody
+	public String test(@RequestParam(value="video_uri") String videoUri) {
+		return videoUri;
+	}
+
 
 	@RequestMapping(method= RequestMethod.POST)
 	@ResponseBody

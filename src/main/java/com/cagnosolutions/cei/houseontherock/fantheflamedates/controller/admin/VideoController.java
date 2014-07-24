@@ -1,19 +1,15 @@
 package com.cagnosolutions.cei.houseontherock.fantheflamedates.controller.admin;
 
-import com.cagnosolutions.cei.houseontherock.fantheflamedates.domain.Video;
+import com.cagnosolutions.cei.houseontherock.fantheflamedates.domain.VimeoAPI;
+import com.cagnosolutions.cei.houseontherock.fantheflamedates.domain.VimeoVideo;
 import com.cagnosolutions.cei.houseontherock.fantheflamedates.service.VideoService;
 import com.cagnosolutions.cei.houseontherock.fantheflamedates.service.WorksheetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
-/**
- * Created by greg on 7/3/14.
- */
 
 @Controller
 @RequestMapping("/admin")
@@ -26,58 +22,52 @@ public class VideoController {
 	private WorksheetService worksheetService;
 
 	// list get
-	@RequestMapping(value = "/list/video", method = RequestMethod.GET)
+	@RequestMapping(value = "/video", method = RequestMethod.GET)
 	public String list(Model model, @RequestParam(value = "sort", required = false) String sort, @RequestParam(value = "order", required = false) String order) {
-		model.addAttribute("video", videoService.findAllSorted(sort, order));
+
+		try {
+			VimeoAPI vimeo = new VimeoAPI("42d31cdffcfb6f820c33687faedda08f");
+			model.addAttribute("videos", vimeo.getInfo( "https://api.vimeo.com/me/videos"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return "admin/video/list";
 	}
 
-	// add get
-	@RequestMapping(value = "/add/video", method = RequestMethod.GET)
-	public String addForm(Model model) {
-		model.addAttribute("video", new Video());
-		return "admin/video/add";
-	}
-
-	// add post
-	@RequestMapping(value = "/add/video", method = RequestMethod.POST)
-	public String add(Video video) {
-		videoService.insert(video);
-		return "redirect:/admin/list/video?added";
-	}
-
-	// view get
-	@RequestMapping(value = "/view/video/{id}", method = RequestMethod.GET)
-	public String view(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("video", videoService.findById(id));
+	// add/edit get
+	@RequestMapping(value = "/video/temp", method = RequestMethod.GET)
+	public String addForm(Model model, @RequestParam(value="video_uri") String videoUri) {
+		try {
+			VimeoAPI vimeo = new VimeoAPI("42d31cdffcfb6f820c33687faedda08f");
+			model.addAttribute("video", vimeo.getInfo( "https://api.vimeo.com" + videoUri));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return "admin/video/view";
 	}
 
-	// delete post
-	@RequestMapping(value = "/del/video/{id}", method = RequestMethod.POST)
-	public String delete(@PathVariable("id") Long id, Model model) {
-		videoService.delete(videoService.findById(id));
-		return "redirect:/admin/list/video?removed";
+	// add post
+	@RequestMapping(value = "/video", method = RequestMethod.POST)
+	public Object add(VimeoVideo video) {
+		try {
+			VimeoAPI vimeo = new VimeoAPI("42d31cdffcfb6f820c33687faedda08f");
+			vimeo.editVideo(video.getVideoUrl(), video);
+			vimeo.addTags(video.getTags(), video.getVideoUrl());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "redirect:/admin/video";
+		//return video;
 	}
 
-	// edit get
-	@RequestMapping(value = "/edit/video/{id}", method = RequestMethod.GET)
-	public String editForm(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("video", videoService.findById(id));
-		return "admin/video/edit";
-	}
-
-	// edit post
-	@RequestMapping(value = "/edit/video/{id}", method = RequestMethod.POST)
-	public String edit(@PathVariable("id") Long id, Video video) {
-		videoService.update(video);
-		return "redirect:/admin/view/video/" + id + "?updated";
-	}
-
-	// worksheet get
-	@RequestMapping(value="/list/worksheet/{videoId}")
-	public String worksheet(Model model, @PathVariable(value="videoId") Long videoId) {
-		model.addAttribute("worksheet", worksheetService.findByVideoId(videoId));
-		return "/admin/worksheet/list";
+	@RequestMapping(value="/video/upload", method = RequestMethod.GET)
+	public String upload(Model model) {
+		try {
+			VimeoAPI vimeo = new VimeoAPI("42d31cdffcfb6f820c33687faedda08f");
+			model.addAttribute("upload", vimeo.postInfo("https://api.vimeo.com/me/videos", "redirect_url=localhost:8080/admin/video/temp"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "admin/video/upload";
 	}
 }

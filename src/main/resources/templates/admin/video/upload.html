@@ -43,26 +43,22 @@
 
 		<!-- content -->
 		<div class="container">
-			${map.form}
-
-			${map.ticket_id}
-
-
 			<div class="col-sm-offset-4 col-sm-4">
-				<legend>${"Hello World"}</legend>
-				<form id="uploader" role="form" method="post" action="${map.upload_link_secure}" enctype="multipart/form-data">
-					<div class="form-group">
-						<label class="btn btn-default btn-block uploader" for="file_data">Select File 1</label>
-						<input type="file" id="file_data" name="file_data" class="uploader" required="true"/>
+				<div id="uploadVideoPanel" class="panel panel-default">
+					<div class="panel-heading">Upload Video</div>
+					<div class="panel-body">
+						<form id="uploader" role="form" method="post" action="${upload.upload_link_secure}" enctype="multipart/form-data">
+							<div class="form-group">
+								<label class="btn btn-default btn-block uploader" for="file_data">Select Video</label>
+								<input type="file" id="file_data" name="file_data" class="uploader" required="true"/>
+							</div>
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+							<button id="uploader" class="btn btn-md btn-primary btn-block" type="submit" disabled="true">Upload</button>
+						</form>
 					</div>
-					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-					<button id="uploader" class="btn btn-md btn-primary btn-block" type="submit" disabled="true">Upload</button>
-				</form>
+				</div>
 			</div>
 		</div>
-
-		<!-- footer -->
-		<div id="footer" class="container"></div>
 
 		<!-- scripts -->
 		<div id="scripts">
