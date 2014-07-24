@@ -9,16 +9,16 @@ public class VimeoVideo {
 
 	private String name;
 	private String description;
-	private String videoUrl;
+	private String videoUri;
 	private List<String> tags;
 
 	public VimeoVideo() {
 	}
 
-	public VimeoVideo(String name, String description, String videoUrl, List<String> tags) {
+	public VimeoVideo(String name, String description, String videoUri, List<String> tags) {
 		this.name = name;
 		this.description = description;
-		this.videoUrl = videoUrl;
+		this.videoUri = videoUri;
 		this.tags = tags;
 	}
 
@@ -38,12 +38,12 @@ public class VimeoVideo {
 		this.description = description;
 	}
 
-	public String getVideoUrl() {
-		return videoUrl;
+	public String getVideoUri() {
+		return videoUri;
 	}
 
-	public void setVideoUrl(String videoUrl) {
-		this.videoUrl = videoUrl;
+	public void setVideoUri(String videoUri) {
+		this.videoUri = videoUri;
 	}
 
 	public List<String> getTags() {

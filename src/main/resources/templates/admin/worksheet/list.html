@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head id="head">
+		<title>spring-boot-base|list</title>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<meta name="description" content=""/>
+		<meta name="author" content=""/>
+		<!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+		<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet"/>
+		<link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"/>
+		<link href="http://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css"/>
+		<link href="/static/css/custom.css" rel="stylesheet" type="text/css"/>
+	</head>
+	<body id="body">
+
+		<!-- navbar -->
+		<div id="navbar" class="navbar navbar-default navbar-static-top navbar-inverse">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#">All Questions</a>
+				</div>
+				<div class="collapse navbar-collapse navbar-ex1-collapse">
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+							<a href="/admin">Home</a>
+						</li>
+						<li>
+							<a href="/admin/add/worksheet">Add Question</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<div class="container">
+			<div id="table" class="panel panel-default">
+				<div class="panel-heading">Questions</div>
+				<div class="panel-body">
+					<div id="questions" class="table-responsive">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>Id</th>
+									<th>Video Id</th>
+									<th>Question</th>
+									<th>Sheet Order</th>
+									<th>Type</th>
+									<th>Options</th>
+								</tr>
+							</thead>
+							<tbody>
+								<#list worksheets as worksheet>
+									<tr>
+										<td>${worksheet.id}</td>
+										<td>${worksheet.videoId}</td>
+										<td>${worksheet.question}</td>
+										<td>${worksheet.sheetOrder}</td>
+										<td>${worksheet.inType?cap_first}</td>
+										<td>${(worksheet.options?size > 0)?string(worksheet.options?join(', '), 'None')}</td>
+										<td><a href="/admin/view/worksheet/${worksheet.id}" id="worksheet_${worksheet.id}">View</a></td>
+									</tr>
+								</#list>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- scripts -->
+		<div id="scripts">
+			<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+			<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+		</div>
+	</body>
+</html>

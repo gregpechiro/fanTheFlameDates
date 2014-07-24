@@ -35,15 +35,17 @@
 				</div>
 			</div>
 		</div>
-		
 		<div id="content" class="container">
-		    <div id="videoFormDiv" class="col-sm-offset-4 col-sm-4" >
+		    <div id="videoFormDiv" class="col-sm-offset-3 col-sm-6" >
 		        <div class="panel panel-default">
 		        	<div class="panel-heading">Video</div>
 		        	<div class="panel-body">
-		        	    <form id="videoForm" role="form" method="post" action="/admin/video">
+						<label>Thumbnail</label>
+						<img src="${video.pictures.sizes?last.link}" class="img-responsive" alt="Video Thumbnail">
+		        	    <br>
+						<form id="videoForm" role="form" method="post" action="/admin/video">
 		        			<div class="form-group">
-								<labe>Name</labe>
+								<label>Name</label>
 		        				<input type="text" id="name" name="name" class="form-control"
 		        					placeholder="Name" required="true" value="${(video.name)!}"/>
 		        			</div>
@@ -56,13 +58,24 @@
 							<div class="form-group">
 								<label>Tags seperated by commas</label>
 								<textarea class="form-control" rows="6" id="tags" name="tags"
-									style="resize:none;" placeholder="Tags" ><#list video.tags as tag>${(tag.name)!}, </#list></textarea>
+									style="resize:none;" placeholder="Tags" ><#assign tags = [] /><#list video.tags as tag><#assign tags = tags + [tag.name] /></#list>${tags?join(', ')}</textarea>
 							</div>
-							<input type="hidden" id="videoUrl" name="videoUrl" value="${video.uri}">
+							<input type="hidden" id="videoUri" name="videoUri" value="${video.uri}">
 		        			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-		        			<button class="btn btn-md btn-primary btn-block" type="submit">Save</button>
-							<a href="/admin/video" id="cancel" class="btn btn-default btn-block">Cancel</a>
-		        		</form>
+							<div class="form-group">
+								<button class="btn btn-md btn-primary btn-block" type="submit">Save</button>
+							</div>
+							<div class="form-group">
+								<a href="/admin/video" id="cancel" class="btn btn-default btn-block">Cancel</a>
+		        			</div>
+						</form>
+						<form id="videoDeleteForm" role="form" method="post" action="/admin/del/video/">
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+							<input type="hidden" name="videoUri" value="${video.uri}">
+							<div class="form-group">
+								<button class="btn btn-md btn-danger btn-block" type="submit">Delete</button>
+							</div>
+						</form>
 		        	</div>
 		        </div>
 		    </div>

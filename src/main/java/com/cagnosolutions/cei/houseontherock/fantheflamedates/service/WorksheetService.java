@@ -56,7 +56,7 @@ public class WorksheetService {
 		return (string == null || string.equals(""));
 	}
 
-	public List<Worksheet> findByVideoId(Long videoId) {
+	public List<Worksheet> findByVideoId(String videoId) {
 		return dao.findByVideoId(videoId);
 	}
 

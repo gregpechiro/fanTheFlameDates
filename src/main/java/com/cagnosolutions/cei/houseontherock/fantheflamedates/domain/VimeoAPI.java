@@ -19,10 +19,9 @@ import java.util.Map;
 
 public class VimeoAPI {
 
-	private String accessToken;
+	private String accessToken = "42d31cdffcfb6f820c33687faedda08f";
 
-	public VimeoAPI(String accessToken) {
-		this.accessToken = accessToken;
+	public VimeoAPI() {
 	}
 
 	public String getAccessToken() {
@@ -77,18 +76,26 @@ public class VimeoAPI {
 		return mapper.readValue(makeApiCall("POST", url, params).getInputStream(),Map.class);
 	}
 
-	public void editVideo(String videoUrl, VimeoVideo video) throws Exception {
+	public void editVideo(VimeoVideo video) throws Exception {
 		Map<String, String> map = new HashMap<>();
 		map.put("name", video.getName());
 		map.put("description", video.getDescription());
 		map.put("privacy.view", "anybody");
 		map.put("review_link", "true");
-		makePatchCall("https://api.vimeo.com/" + video.getVideoUrl(), map);
+		makePatchCall("https://api.vimeo.com/" + video.getVideoUri(), map);
 	}
 
 	public void addTags(List<String> tags, String videoUrl) throws Exception {
 		for (String tag : tags) {
 			makeApiCall("PUT", "https://api.vimeo.com" + videoUrl + "/tags/" + tag);
 		}
+	}
+
+	public void addEmbedPreset(String preset, String videoUrl) throws Exception {
+		makeApiCall("PUT", "https://api.vimeo.com" + videoUrl + "/presets/" + preset);
+	}
+
+	public void deleteVideo(String videoUri) throws Exception {
+		makeApiCall("DELETE", "https://api.vimeo.com" + videoUri);
 	}
 }

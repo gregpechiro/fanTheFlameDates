@@ -1,5 +1,6 @@
 package com.cagnosolutions.cei.houseontherock.fantheflamedates.controller.video;
 
+import com.cagnosolutions.cei.houseontherock.fantheflamedates.domain.VimeoAPI;
 import com.cagnosolutions.cei.houseontherock.fantheflamedates.service.VideoService;
 import com.cagnosolutions.cei.houseontherock.fantheflamedates.service.WorksheetService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,19 +30,29 @@ public class VideoController {
 	@RequestMapping(value = "/list/video", method = RequestMethod.GET)
 	public String list(Model model, @RequestParam(value = "sort", required = false) String sort, @RequestParam(value = "order", required = false) String order, Principal principal) {
 		model.addAttribute("auth", (principal == null));
-		model.addAttribute("video", videoService.findAllSorted(sort, order));
+		try {
+			VimeoAPI vimeo = new VimeoAPI();
+			model.addAttribute("videos", vimeo.getInfo("https://api.vimeo.com/me/videos"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return "video/list";
 	}
 
 	// view get
-	@RequestMapping(value = "/view/video/{id}", method = RequestMethod.GET)
-	public String view(@PathVariable("id") Long id, Model model, Principal principal) {
+	@RequestMapping(value = "/videos/{id}", method = RequestMethod.GET)
+	public String view(@PathVariable("id") String id, Model model, Principal principal) {
 		model.addAttribute("auth", (principal == null));
-		model.addAttribute("video", videoService.findById(id));
+		try {
+			VimeoAPI vimeo = new VimeoAPI();
+			model.addAttribute("video", vimeo.getInfo("https://api.vimeo.com/videos/" + id));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		if (principal == null) {
 			return "video/view_loggedout";
 		}
-		model.addAttribute("worksheet", worksheetService.findByVideoId(id));
+		model.addAttribute("worksheets", worksheetService.findByVideoId("/videos/" + id));
 		return "video/view";
 
 	}

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head id="head">
+		<title>spring-boot-base|add</title>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<meta name="description" content=""/>
+		<meta name="author" content=""/>
+		<!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+		<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet"/>
+		<link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"/>
+		<link href="http://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css"/>
+		<link href="/static/css/custom.css" rel="stylesheet" type="text/css"/>
+	</head>
+	<body id="body">
+
+		<!-- navbar -->
+		<div id="navbar" class="navbar navbar-default navbar-static-top navbar-inverse">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#">Worksheet</a>
+				</div>
+				<div class="collapse navbar-collapse navbar-ex1-collapse">
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+							<a href="/admin">Home</a>
+						</li>
+						<li>
+							<a href="/admin/list/worksheet">Worksheets</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<div class="container">
+			<div class="col-sm-3 col-sm-offset-6" >
+				<div class="panel panel-default">
+					<div class="panel-heading">Add Worksheet Question</div>
+					<div class="panel-body">
+						<form id="addQuestion" role="form" method="post" action="/admin/add/worksheet">
+							<div class="form-group">
+								<input type="text" id="question" name="question" class="form-control"
+									   placeholder="Question" required="true"/>
+							</div>
+							<div class="form-group">
+								<input type="text" id="sheetOrder" name="sheetOrder" class="form-control"
+									   placeholder="Order" required="true"/>
+							</div>
+							<div class="form-group">
+								<label>Choose a video</label>
+								<select id="videoId" name="videoId" class="form-control">
+									<#if videos??>
+										<#list videos.data as video>
+											<option value="${video.uri}">${video.name}</option>
+										</#list>
+									</#if>
+								</select>
+							</div>
+							<div id="selectType" class="form-group">
+								<label>Please choose an answer type</label>
+								<select id="inType" name="inType" class="form-control">
+									<option value="text">Text</option>
+									<option value="textarea">Text Box</option>
+									<option value="radio">Select One</option>
+									<option value="checkbox">Select Many</option>
+								</select>
+							</div>
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+							<input type="hidden" name="options" value=""/>
+						</form>
+						<div id="allOptions">
+							<div id="addOption" class="form-group">
+							</div>
+						</div>
+						<button id="addQuestionButton" class="btn btn-md btn-primary btn-block" type="submit">Add</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="nextOptionInput" hidden="true">
+			<div class="input-group">
+				<input name="option" type="text" placeHolder="Add Option" class="form-control">
+				<span class="input-group-btn">
+        			<a class="btn btn-danger" name="removeOption"><i class="fa fa-times"></i></a>
+      			</span>
+			</div>
+		</div>
+
+		<div id="nextOptionDiv" hidden="true">
+			<div id="addOption" class="form-group">
+			</div>
+		</div>
+
+		<div id="nextOptionButton" hidden="true">
+			<div class="form-group">
+				<a class="btn btn-success" id="addOptionButton">Add Option</a>
+			</div>
+		</div>
+
+		<!-- scripts -->
+		<div id="scripts">
+			<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+			<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+			<script>
+				// set variables
+				var i = 1;
+				var type = 'select[id="inType"]'
+				var addOptionDiv = 'div[id="allOptions"] div[id="addOption"]'
+
+				// add input with delete button add placeholder after input set delete action
+				function addOption() {
+					$(addOptionDiv).html($('div[id="nextOptionInput"]').html());
+					$(addOptionDiv).attr('id', 'option'+i);
+					$('div[id="option' + i + '"] input').attr('id', 'option'+i);
+					$('div[id="option' + i + '"] a').attr('id', 'option'+i);
+					$('div[id="option' + i + '"]').after($('div[id="nextOptionDiv"]').html());
+					$('a[id="option' + i + '"]').click(function() {
+						$('div[id="'+$(this).attr('id')+'"]').remove();
+					});
+					i++;
+				}
+
+				// run add option on type select add add option button after input || remove all options on type select
+				$(type).change(function() {
+					if ($(type).val() == 'radio' || $(type).val() == 'checkbox') {
+						addOption();
+						$(addOptionDiv).after($('div[id="nextOptionButton"]').html());
+						$('a[id="addOptionButton"]').click(function() {
+							addOption();
+						});
+					} else {
+						$('div[id="allOptions"]').html($('div[id="nextOptionDiv"]').html());
+					}
+				});
+
+				// create option list and submit form
+				$('button[id="addQuestionButton"]').click(function() {
+					if ($(type).val() == 'radio' || $(type).val() == 'checkbox') {
+						var option = []
+						inputs = $('div[id="allOptions"] input[name="option"]');
+						for (i = 0; i < inputs.length; i++) {
+							option.push(inputs[i].value.replace(',', ''));
+						}
+						$('form[id="addQuestion"] input[name="options"]').val(option);
+					}
+					$('form[id="addQuestion"]').submit();
+				});
+			</script>
+		</div>
+	</body>
+</html>

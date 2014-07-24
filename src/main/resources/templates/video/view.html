@@ -53,23 +53,29 @@
 				<div class="row well well-sm trans">
 					<div class="col-sm-7">
 						<br>
-						<iframe src="//player.vimeo.com/video/${video.uri}?portrait=0&title=0&byline=0&badge=0&color=eeeeee&&amp;autoplay=0" width="100%" height="350" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+						<iframe src="//player.vimeo.com/video/${video.uri?split('/')[2]}?portrait=0&title=0&byline=0&badge=0&color=eeeeee&&amp;autoplay=0" width="100%" height="350" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 						<p><strong>Tags:</strong></p>
-						<p>${video.tags}</p>
+						<p>
+							<#assign tags =[] />
+							<#list video.tags as tag>
+								<#assign tags = tags + [tag.name] />
+							</#list>
+							${tags?join(', ')}
+						</p>
 						<p><strong>Description</strong></p>
-						<p>${video.desc}</p>
+						<p>${video.description}</p>
 					</div>
 					<div class="col-sm-5">
 						<br>
 						<div class="panel panel-default">
 							<div class="panel-heading">Work Book</div>
-							<div class="panel-body" style="color:#000;">
+							<div class="panel-body">
 								<form id="workbook" role="form" method="post" action="#">
-									<#list worksheet as q>
-										<#switch q.inType>
+									<#list worksheets as worksheet>
+										<#switch worksheet.inType>
 											<#case "radio">
-												<strong>${q.question}?</strong>
-												<#list q.options as option>
+												<strong>${worksheet.question}?</strong>
+												<#list worksheet.options as option>
 													<div class="radio">
 														<label>
 															<input type="radio" name="optionsRadios" id="optionsRadios1" value="option1">
@@ -79,8 +85,8 @@
 												</#list>
 												<#break>
 											<#case "checkbox">
-												<strong>${q.question} (Select all that apply)</strong>
-												<#list q.options as option>
+												<strong>${worksheet.question} (Select all that apply)</strong>
+												<#list worksheet.options as option>
 													<div class="checkbox">
 														<label>
 															<input type="checkbox" value="">
@@ -90,15 +96,15 @@
 												</#list>
 												<#break>
 											<#case "textarea">
-												<strong>${q.question}</strong>
+												<strong>${worksheet.question}</strong>
 												<div class="form-group">
 													<textarea class="form-control" style="resize:none;"></textarea>
 												</div>
 												<#break>
 											<#default>
-												<strong>${q.question}?</strong>
+												<strong>${worksheet.question}?</strong>
 												<div class="form-group">
-													<input type="${q.inType}" id="" name="" class="form-control" required="true"/>
+													<input type="${worksheet.inType}" id="" name="" class="form-control" required="true"/>
 												</div>
 										</#switch>
 									</#list>

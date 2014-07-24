@@ -15,5 +15,5 @@ import java.util.List;
 public interface WorksheetRepository extends JpaRepository<Worksheet, Long> {
 
 	@Query("SELECT w FROM Worksheet w WHERE w.videoId=:videoId")
-	public List<Worksheet> findByVideoId(@Param("videoId") Long videoId);
+	public List<Worksheet> findByVideoId(@Param("videoId") String videoId);
 }

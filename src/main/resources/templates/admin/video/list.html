@@ -64,11 +64,13 @@
 											<td>${(video.description)!}</td>
 											<td><a href="${video.link}" id="" class="">Watch</a></td>
 											<td>
+												<#assign tags =[] />
 												<#list video.tags as tag>
-													${(tag.name)!},
+													<#assign tags = tags + [tag.name] />
 												</#list>
+												${tags?join(', ')}
 											</td>
-											<td><a href="/admin/video/temp?video_uri=${video.uri}">Edit</a></td>
+											<td><a href="/admin/video/view?video_uri=${video.uri}">Edit</a></td>
 										</tr>
 									</#list>
 		        				</tbody>

@@ -53,12 +53,12 @@
 			<div class="col-sm-12">
 				<div class="row well well-sm trans text-center">
 					<br>
-					<#list video as v>
-						<div id="video_${v.id}" class="col-xs-6 col-sm-3 col-md-2">
-							<a href="/view/video/${v.id}" class="thumbnail">
-								<i class="fa fa-vimeo-square fa-5x" style="color:#3f3f3f;"></i>
+					<#list videos.data as video>
+						<div class="col-xs-6 col-sm-3 col-md-2">
+							<a href="${video.uri}" class="thumbnail">
+								<img src="${video.pictures.sizes?last.link}" class="img-responsive img-thumbnail" alt="Video Thumbnail">
 							</a>
-							<p class="lead"><strong>${v.title}</strong><br/><small>${v.desc}</small></p>
+							<p><strong>${video.name}</strong></p>
 						</div>
 					</#list>
 				</div>

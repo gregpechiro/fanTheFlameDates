@@ -14,7 +14,7 @@ public class Worksheet {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	private Long videoId;
+	private String videoId;
 	private String question;
 	private Short sheetOrder;
 	private String inType;
@@ -23,7 +23,7 @@ public class Worksheet {
 	public Worksheet() {
 	}
 
-	public Worksheet(Long videoId, String question, Short sheetOrder, String inType, ArrayList<String> options) {
+	public Worksheet(String videoId, String question, Short sheetOrder, String inType, ArrayList<String> options) {
 		this.videoId = videoId;
 		this.question = question;
 		this.sheetOrder = sheetOrder;
@@ -43,11 +43,11 @@ public class Worksheet {
 		this.id = id;
 	}
 
-	public Long getVideoId() {
+	public String getVideoId() {
 		return videoId;
 	}
 
-	public void setVideoId(Long videoId) {
+	public void setVideoId(String videoId) {
 		this.videoId = videoId;
 	}
 
