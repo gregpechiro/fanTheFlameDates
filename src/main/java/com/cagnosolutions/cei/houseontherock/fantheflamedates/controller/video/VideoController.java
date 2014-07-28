@@ -1,8 +1,9 @@
 package com.cagnosolutions.cei.houseontherock.fantheflamedates.controller.video;
 
 import com.cagnosolutions.cei.houseontherock.fantheflamedates.domain.VimeoAPI;
+import com.cagnosolutions.cei.houseontherock.fantheflamedates.service.QuestionService;
+import com.cagnosolutions.cei.houseontherock.fantheflamedates.service.UserService;
 import com.cagnosolutions.cei.houseontherock.fantheflamedates.service.VideoService;
-import com.cagnosolutions.cei.houseontherock.fantheflamedates.service.WorksheetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,7 +25,10 @@ public class VideoController {
 	private VideoService videoService;
 
 	@Autowired
-	private WorksheetService worksheetService;
+	private QuestionService questionService;
+
+	@Autowired
+	private UserService userservice;
 
 	// list get
 	@RequestMapping(value = "/list/video", method = RequestMethod.GET)
@@ -52,7 +56,8 @@ public class VideoController {
 		if (principal == null) {
 			return "video/view_loggedout";
 		}
-		model.addAttribute("worksheets", worksheetService.findByVideoId("/videos/" + id));
+		model.addAttribute("questions", questionService.findByVideoId("/videos/" + id));
+		model.addAttribute("username", principal.getName());
 		return "video/view";
 
 	}

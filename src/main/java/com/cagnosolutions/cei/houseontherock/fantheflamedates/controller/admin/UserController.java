@@ -67,63 +67,63 @@ public class UserController {
         return "redirect:/admin/list/user";
     }
 
-    // edit.html form
-    @RequestMapping(value="/edit.html/user/{id}", method=RequestMethod.GET)
+    // edit form
+    @RequestMapping(value="/edit/user/{id}", method=RequestMethod.GET)
     public String editForm(@PathVariable("id") String id, Model model) {
         model.addAttribute("user", userService.findById(id));
-        return "admin/user/edit.html";
+        return "admin/user/edit";
     }
 
-    // edit.html
-    @RequestMapping(value="/edit.html/user/{id}", method=RequestMethod.POST)
+    // edit
+    @RequestMapping(value="/edit/user/{id}", method=RequestMethod.POST)
     public String edit(@PathVariable("id") String id, User user, RedirectAttributes attr) {
         userService.updateUser(id, user);
 		flashService.flash(attr, "update.user.success");
-        return "redirect:/admin/edit.html/user/" + id;
+        return "redirect:/admin/edit/user/" + id;
     }
 
-    // edit.html pass form
-    @RequestMapping(value="/edit.html/user/{id}/password", method=RequestMethod.GET)
+    // edit pass form
+    @RequestMapping(value="/edit/user/{id}/password", method=RequestMethod.GET)
     public String editPassForm(@PathVariable("id") String id, Model model) {
         model.addAttribute("user", userService.findById(id));
-        return "admin/user/editpass";
+        return "admin/user/edit/pass";
     }
 
-    // edit.html pass
-    @RequestMapping(value="/edit.html/user/{id}/password", method=RequestMethod.POST)
+    // edit pass
+    @RequestMapping(value="/edit/user/{id}/password", method=RequestMethod.POST)
     public String editPass(@PathVariable("id") String id, @RequestParam("password") String password, @RequestParam("confirm") String confirm, RedirectAttributes attr) {
         if(password == null || confirm == null || !password.equals(confirm)) {
 			flashService.flash(attr, "password.error");
-            return "redirect:/admin/edit.html/user/" + id + "/password";
+            return "redirect:/admin/edit/user/" + id + "/password";
         }
         User user = userService.findById(id);
         user.setPassword(new BCryptPasswordEncoder().encode(password));
         userService.update(user);
 		flashService.flash(attr, "password.success");
-        return "redirect:/admin/edit.html/user/" + id;
+        return "redirect:/admin/edit/user/" + id;
     }
 
-    // edit.html user form
-    @RequestMapping(value="/edit.html/user/{id}/username", method=RequestMethod.GET)
+    // edit user form
+    @RequestMapping(value="/edit/user/{id}/username", method=RequestMethod.GET)
     public String editUserForm(@PathVariable("id") String id, Model model) {
         model.addAttribute("user", userService.findById(id));
-        return "admin/user/edituser";
+        return "admin/user/edit/user";
     }
 
-    // edit.html user
-    @RequestMapping(value="/edit.html/user/{id}/username", method=RequestMethod.POST)
+    // edit user
+    @RequestMapping(value="/edit/user/{id}/username", method=RequestMethod.POST)
     public String editUser(@PathVariable("id") String id, @RequestParam("username") String username, RedirectAttributes attr) {
         if(username == null || username.equals(id) || userService.exists(username)) {
 			flashService.flash(attr, "update.user.error");
-			return "redirect:/admin/edit.html/user/" + id + "/username";
+			return "redirect:/admin/edit/user/" + id + "/username";
 		}
         if(userService.updateUsername(id, username)) {
 			flashService.flash(attr, "update.user.success");
-			return "redirect:/admin/edit.html/user/" + username;
+			return "redirect:/admin/edit/user/" + username;
 		}
         else {
 			flashService.flash(attr, "update.user.error");
-			return "redirect:/admin/edit.html/user/" + id + "/username";
+			return "redirect:/admin/edit/user/" + id + "/username";
 		}
 	}
 

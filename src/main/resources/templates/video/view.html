@@ -70,47 +70,72 @@
 						<div class="panel panel-default">
 							<div class="panel-heading">Work Book</div>
 							<div class="panel-body">
-								<form id="workbook" role="form" method="post" action="#">
-									<#list worksheets as worksheet>
-										<#switch worksheet.inType>
+								<#assign i = 0 />
+								<form id="worksheet" role="form" method="post" action="/workbook">
+									<#list questions as question>
+										<#switch question.inType>
 											<#case "radio">
-												<strong>${worksheet.question}?</strong>
-												<#list worksheet.options as option>
+												<label id="question_${i}">${question.askedQuestion}?</label>
+												<#list question.options as option>
 													<div class="radio">
 														<label>
-															<input type="radio" name="optionsRadios" id="optionsRadios1" value="option1">
+															<input id="question_${i}" type="radio" name="${question.askedQuestion}" id="optionsRadios1" value="option1">
 															${option}
 														</label>
 													</div>
 												</#list>
 												<#break>
 											<#case "checkbox">
-												<strong>${worksheet.question} (Select all that apply)</strong>
-												<#list worksheet.options as option>
+												<label id="question_${i}">${question.askedQuestion} (Select all that apply)</label>
+												<#list question.options as option>
 													<div class="checkbox">
 														<label>
-															<input type="checkbox" value="">
+															<input name="${question.askedQuestion}" id="question_${i}" type="checkbox" value="${option}">
 															${option}
 														</label>
 													</div>
 												</#list>
 												<#break>
 											<#case "textarea">
-												<strong>${worksheet.question}</strong>
+												<label id="question_${i}">${question.askedQuestion}</label>
 												<div class="form-group">
-													<textarea class="form-control" rows="5" style="resize:none;"></textarea>
+													<textarea name="${question.askedQuestion}" id="question_${i}" class="form-control" rows="5" style="resize:none;"></textarea>
 												</div>
 												<#break>
 											<#default>
-												<strong>${worksheet.question}?</strong>
+												<label id="question_${i}">${question.askedQuestion}?</label>
 												<div class="form-group">
-													<input type="${worksheet.inType}" id="" name="" class="form-control" required="true"/>
+													<input name="${question.askedQuestion}" id="question_${i}" type="${question.inType}" class="form-control" required="true"/>
 												</div>
 										</#switch>
+										<#assign i = i +1 />
 									</#list>
-									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-									<button class="btn btn-md btn-default btn-block" type="submit">Submit</button>
+									<br>
 								</form>
+
+								<form id="submitForm" action="/test" role="form" method="post">
+									<div class="checkbox">
+										<label>
+											<input type="checkbox" name="save" value="true"> Save completed workbook in my profile.
+										</label>
+									</div>
+									<div class="checkbox">
+										<label>
+											<input type="checkbox" name="email" value="true"> Email completed workbook to me.
+										</label>
+									</div>
+									<div class="checkbox">
+										<label>
+											<input type="checkbox" name="submit" value="true"> Anonymously submit my completed workbook to Fan the Flame Dates.
+										</label>
+									</div>
+									<input type="hidden" name="userId" value="${username}">
+									<input type="hidden" name="videoId" value="${video.uri}">
+									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+									<input id="answers" type="hidden" name="answers">
+								</form>
+								<button id="submitWorksheet" class="btn btn-md btn-default btn-block">Submit</button>
+
 							</div>
 						</div>
 					</div>
@@ -119,17 +144,17 @@
 		</div>
 
 		<!-- footer -->
-		<div id="navbar" class="navbar navbar-default navbar-static-bottom navbar-inverse">
+		<div id="navbar" class="footer navbar-default navbar-inverse">
 			<div class="container">
 				<div class="navbar-header">
-					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#footerMenu">
 						<span class="sr-only">Toggle navigation</span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
 				</div>
-				<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<div id="footerMenu" class="collapse navbar-collapse navbar-ex1-collapse">
 					<ul class="nav navbar-nav navbar-right">
 						<li>
 							<a href="#">Live Events</a>
@@ -152,6 +177,30 @@
 		<div id="scripts">
 			<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 			<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+			<script>
+
+				function formToObject(form) {
+				    var object = {};
+				    var formArray = form.serializeArray();
+				    $.each(formArray, function() {
+				        if (object[this.name] !== undefined) {
+				            if (!object[this.name].push) {
+				                object[this.name] = [object[this.name]];
+				            }
+				            object[this.name].push(this.value || '');
+				        } else {
+				            object[this.name] = this.value || '';
+				        }
+				    });
+				    return object;
+				};
+
+				$('button[id="submitWorksheet"]').click(function() {
+					obj = FormToObject($('form[id="worksheet"]'));
+
+				});
+
+			</script>
 		</div>
 	</body>
 </html>

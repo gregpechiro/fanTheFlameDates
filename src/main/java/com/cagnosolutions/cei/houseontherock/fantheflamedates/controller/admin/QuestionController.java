@@ -1,17 +1,14 @@
 package com.cagnosolutions.cei.houseontherock.fantheflamedates.controller.admin;
 
+import com.cagnosolutions.cei.houseontherock.fantheflamedates.domain.Question;
 import com.cagnosolutions.cei.houseontherock.fantheflamedates.domain.VimeoAPI;
-import com.cagnosolutions.cei.houseontherock.fantheflamedates.domain.Worksheet;
 import com.cagnosolutions.cei.houseontherock.fantheflamedates.service.FlashService;
+import com.cagnosolutions.cei.houseontherock.fantheflamedates.service.QuestionService;
 import com.cagnosolutions.cei.houseontherock.fantheflamedates.service.VideoService;
-import com.cagnosolutions.cei.houseontherock.fantheflamedates.service.WorksheetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
@@ -20,10 +17,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/admin")
-public class WorksheetController {
+public class QuestionController {
 
 	@Autowired
-	private WorksheetService worksheetService;
+	private QuestionService questionService;
 
 	@Autowired
 	private VideoService videoService;
@@ -32,14 +29,14 @@ public class WorksheetController {
 	private FlashService flashService;
 
 	// list get
-	@RequestMapping(value = "/list/worksheet", method = RequestMethod.GET)
+	@RequestMapping(value = "/list/question", method = RequestMethod.GET)
 	public String list(Model model, @RequestParam(value = "sort", required = false) String sort, @RequestParam(value = "order", required = false) String order) {
-		model.addAttribute("worksheets", worksheetService.findAllSorted(sort, order));
-		return "admin/worksheet/list";
+		model.addAttribute("questions", questionService.findAllSorted(sort, order));
+		return "admin/question/list";
 	}
 
 	// add get
-	@RequestMapping(value = "/add/worksheet", method = RequestMethod.GET)
+	@RequestMapping(value = "/add/question", method = RequestMethod.GET)
 	public String addForm(Model model) {
 		try {
 			VimeoAPI vimeo = new VimeoAPI();
@@ -47,35 +44,35 @@ public class WorksheetController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "admin/worksheet/add";
+		return "admin/question/add";
 	}
 
 	// add post
-	@RequestMapping(value = "/add/worksheet", method = RequestMethod.POST)
-	public String add(Worksheet worksheet, RedirectAttributes attr) {
-		worksheetService.insert(worksheet);
+	@RequestMapping(value = "/add/question", method = RequestMethod.POST)
+	public String add(Question question, RedirectAttributes attr) {
+		questionService.insert(question);
 		flashService.flash(attr, "update.success");
-		return "redirect:/admin/list/worksheet";
+		return "redirect:/admin/list/question";
 	}
 
 	// view get
-	@RequestMapping(value = "/view/worksheet/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/view/question/{id}", method = RequestMethod.GET)
 	public String view(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("worksheet", worksheetService.findById(id));
+		model.addAttribute("question", questionService.findById(id));
 		try {
 			VimeoAPI vimeo = new VimeoAPI();
 			model.addAttribute("videos", vimeo.getInfo("https://api.vimeo.com/me/videos"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "admin/worksheet/view";
+		return "admin/question/view";
 	}
 
 	// delete post
-	@RequestMapping(value = "/del/worksheet/{id}", method = RequestMethod.POST)
+	@RequestMapping(value = "/del/question/{id}", method = RequestMethod.POST)
 	public String delete(@PathVariable("id") Long id, RedirectAttributes attr) {
-		worksheetService.delete(worksheetService.findById(id));
+		questionService.delete(questionService.findById(id));
 		flashService.flash(attr, "delete.success");
-		return "redirect:/admin/list/worksheet";
+		return "redirect:/admin/list/question";
 	}
 }

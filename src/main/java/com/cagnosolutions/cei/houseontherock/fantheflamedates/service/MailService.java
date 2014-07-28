@@ -8,21 +8,21 @@ import org.springframework.stereotype.Service;
 @Service(value = "mailService")
 public class MailService {
 
-    @Autowired
-    private JavaMailSender mailSender;
+	@Autowired
+	private JavaMailSender mailSender;
 
-    public void sendSimpleEmail(String from, String subject, String body, String... to) {
-        new Thread(
-                () -> {
-                    SimpleMailMessage email = new SimpleMailMessage();
-                    email.setFrom(from);
-                    email.setReplyTo(from);
-                    email.setSubject(subject);
-                    email.setText(body);
-                    email.setTo(to);
-                    mailSender.send(email);
-                }
-        ).start();
-    }
+	public void sendSimpleEmail(String from, String subject, String body, String... to) {
+		new Thread(
+			() -> {
+				SimpleMailMessage email = new SimpleMailMessage();
+				email.setFrom(from);
+				email.setReplyTo(from);
+				email.setSubject(subject);
+				email.setText(body);
+				email.setTo(to);
+				mailSender.send(email);
+			}
+		).start();
+	}
 
 }

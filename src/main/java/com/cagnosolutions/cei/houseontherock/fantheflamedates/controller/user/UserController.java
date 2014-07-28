@@ -61,14 +61,14 @@ public class UserController {
         return "redirect:/user/account";
     }
 
-    // edit.html pass form
+    // edit pass form
     @RequestMapping(value="/user/account/password", method=RequestMethod.GET)
     public String editPassForm(Principal principal, Model model) {
         model.addAttribute("user", userService.findById(principal.getName()));
         return "user/editpass";
     }
 
-    // edit.html pass
+    // edit pass
     @RequestMapping(value="/user/account/password", method=RequestMethod.POST)
     public String editPass(Principal principal, @RequestParam("password") String password, @RequestParam("confirm") String confirm, RedirectAttributes attr) {
         if(password == null || confirm == null || !password.equals(confirm)) {
@@ -82,14 +82,14 @@ public class UserController {
         return "redirect:/user/account";
     }
 
-    // edit.html username form
+    // edit username form
     @RequestMapping(value="/user/account/username", method=RequestMethod.GET)
     public String editUsernameForm(Principal principal, Model model) {
         model.addAttribute("user", userService.findById(principal.getName()));
         return "user/edituser";
     }
 
-    // edit.html username
+    // edit username
     @RequestMapping(value="/user/account/username", method=RequestMethod.POST)
     public String editUsername(Principal principal, @RequestParam("username") String username, RedirectAttributes attr) {
         if(username == null || username.equals(principal.getName()) || userService.exists(username)) {

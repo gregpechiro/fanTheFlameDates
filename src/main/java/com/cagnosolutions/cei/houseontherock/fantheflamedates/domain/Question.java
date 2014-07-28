@@ -8,24 +8,24 @@ import java.util.ArrayList;
  * Created by greg on 7/3/14.
  */
 @Entity
-@Table(name = "worksheet")
-public class Worksheet {
+@Table(name = "question")
+public class Question {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private String videoId;
-	private String question;
+	private String askedQuestion;
 	private Short sheetOrder;
 	private String inType;
 	private ArrayList<String> options;
 
-	public Worksheet() {
+	public Question() {
 	}
 
-	public Worksheet(String videoId, String question, Short sheetOrder, String inType, ArrayList<String> options) {
+	public Question(String videoId, String askedQuestion, Short sheetOrder, String inType, ArrayList<String> options) {
 		this.videoId = videoId;
-		this.question = question;
+		this.askedQuestion = askedQuestion;
 		this.sheetOrder = sheetOrder;
 		this.inType = inType;
 		this.options = options;
@@ -51,12 +51,12 @@ public class Worksheet {
 		this.videoId = videoId;
 	}
 
-	public String getQuestion() {
-		return question;
+	public String getAskedQuestion() {
+		return askedQuestion;
 	}
 
-	public void setQuestion(String question) {
-		this.question = question;
+	public void setAskedQuestion(String askedQuestion) {
+		this.askedQuestion = askedQuestion;
 	}
 
 	public Short getSheetOrder() {

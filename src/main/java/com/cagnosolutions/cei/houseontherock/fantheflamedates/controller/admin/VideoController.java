@@ -4,7 +4,7 @@ import com.cagnosolutions.cei.houseontherock.fantheflamedates.domain.VimeoAPI;
 import com.cagnosolutions.cei.houseontherock.fantheflamedates.domain.VimeoVideo;
 import com.cagnosolutions.cei.houseontherock.fantheflamedates.service.FlashService;
 import com.cagnosolutions.cei.houseontherock.fantheflamedates.service.VideoService;
-import com.cagnosolutions.cei.houseontherock.fantheflamedates.service.WorksheetService;
+import com.cagnosolutions.cei.houseontherock.fantheflamedates.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +21,7 @@ public class VideoController {
 	private VideoService videoService;
 
 	@Autowired
-	private WorksheetService worksheetService;
+	private QuestionService questionService;
 
 	@Autowired
 	private FlashService flashService;

@@ -13,19 +13,23 @@ public class User {
     private String email;
 	private String role;
 	private boolean active;
+	private short challengeProgress;
+	private boolean challengeComplete;
 	
 	public User() {}
 
-    public User(String username, String password, String name, String email, String role, boolean active) {
-        this.username = username;
-        this.password = password;
-        this.name = name;
-        this.email = email;
-        this.role = role;
-        this.active = active;
-    }
+	public User(String username, String password, String name, String email, String role, boolean active, short challengeProgress, boolean challengeComplete) {
+		this.username = username;
+		this.password = password;
+		this.name = name;
+		this.email = email;
+		this.role = role;
+		this.active = active;
+		this.challengeProgress = challengeProgress;
+		this.challengeComplete = challengeComplete;
+	}
 
-    public String getUsername() {
+	public String getUsername() {
         return username;
     }
 
@@ -73,7 +77,23 @@ public class User {
         this.active = active;
     }
 
-    public String toString() {
+	public short getChallengeProgress() {
+		return challengeProgress;
+	}
+
+	public void setChallengeProgress(short challengeProgress) {
+		this.challengeProgress = challengeProgress;
+	}
+
+	public boolean isChallengeComplete() {
+		return challengeComplete;
+	}
+
+	public void setChallengeComplete(boolean challengeComplete) {
+		this.challengeComplete = challengeComplete;
+	}
+
+	public String toString() {
         return String.format("username: %s, password: %s, name: %s, email: %s, role: %s, active: %b",
                 username, password, name, email, role, active);
     }

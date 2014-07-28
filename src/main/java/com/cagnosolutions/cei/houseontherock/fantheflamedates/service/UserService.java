@@ -43,7 +43,9 @@ public class UserService {
                             user.getName(),
                                 user.getEmail(),
                                     user.getRole(),
-                                        user.getActive());
+                                        user.getActive(),
+											user.getChallengeProgress(),
+												user.isChallengeComplete());
             dao.delete(id);
             dao.saveAndFlush(updated);
         }

@@ -1,7 +1,7 @@
 package com.cagnosolutions.cei.houseontherock.fantheflamedates.service;
 
-import com.cagnosolutions.cei.houseontherock.fantheflamedates.domain.Worksheet;
-import com.cagnosolutions.cei.houseontherock.fantheflamedates.repository.WorksheetRepository;
+import com.cagnosolutions.cei.houseontherock.fantheflamedates.domain.Question;
+import com.cagnosolutions.cei.houseontherock.fantheflamedates.repository.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -14,29 +14,29 @@ import java.util.List;
  */
 
 @Transactional
-@Service("worksheetService")
-public class WorksheetService {
+@Service("questionService")
+public class QuestionService {
 
 	@Autowired
-	private WorksheetRepository dao;
+	private QuestionRepository dao;
 
-	public Worksheet insert(Worksheet worksheet) {
-		return dao.saveAndFlush(worksheet);
+	public Question insert(Question question) {
+		return dao.saveAndFlush(question);
 	}
 
-	public void update(Worksheet worksheet) {
-		dao.save(worksheet);
+	public void update(Question question) {
+		dao.save(question);
 	}
 
-	public void delete(Worksheet worksheet) {
-		dao.delete(worksheet);
+	public void delete(Question question) {
+		dao.delete(question);
 	}
 
-	public List<Worksheet> findAll() {
+	public List<Question> findAll() {
 		return dao.findAll();
 	}
 
-	public Worksheet findById(Long id) {
+	public Question findById(Long id) {
 		return dao.findOne(id);
 	}
 
@@ -44,7 +44,7 @@ public class WorksheetService {
 		return dao.exists(id);
 	}
 
-	public List<Worksheet> findAllSorted(String sort, String order) {
+	public List<Question> findAllSorted(String sort, String order) {
 		if ((isEmpty(sort) && isEmpty(order)) || isEmpty(sort))
 			return dao.findAll();
 		if (isEmpty(order) || !order.toLowerCase().startsWith("asc") || !order.toLowerCase().startsWith("desc"))
@@ -56,7 +56,7 @@ public class WorksheetService {
 		return (string == null || string.equals(""));
 	}
 
-	public List<Worksheet> findByVideoId(String videoId) {
+	public List<Question> findByVideoId(String videoId) {
 		return dao.findByVideoId(videoId);
 	}
 

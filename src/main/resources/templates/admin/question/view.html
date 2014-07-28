@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head id="head">
-		<title>spring-boot-base|add</title>
+		<title>spring-boot-base|edit</title>
 		<meta charset="utf-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 		<meta name="description" content=""/>
@@ -24,7 +24,7 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="#">Worksheet</a>
+					<a class="navbar-brand" href="#">Question</a>
 				</div>
 				<div class="collapse navbar-collapse navbar-ex1-collapse">
 					<ul class="nav navbar-nav navbar-right">
@@ -32,33 +32,32 @@
 							<a href="/admin">Home</a>
 						</li>
 						<li>
-							<a href="/admin/list/worksheet">Worksheets</a>
+							<a href="/admin/list/question">Question</a>
 						</li>
 					</ul>
 				</div>
 			</div>
 		</div>
-
 		<div class="container">
 			<div class="col-sm-6 col-sm-offset-3" >
 				<div class="panel panel-default">
-					<div class="panel-heading">Add Worksheet Question</div>
+					<div class="panel-heading">Add Question Question</div>
 					<div class="panel-body">
-						<form id="addQuestion" role="form" method="post" action="/admin/add/worksheet">
+						<form id="addQuestion" role="form" method="post" action="/admin/add/question">
 							<div class="form-group">
-								<input type="text" id="question" name="question" class="form-control"
-									   placeholder="Question" required="true"/>
+								<input type="text" id="askedQuestion" name="askedQuestion" class="form-control"
+									   placeholder="Question" required="true" value="${question.askedQuestion}"/>
 							</div>
 							<div class="form-group">
 								<input type="text" id="sheetOrder" name="sheetOrder" class="form-control"
-									   placeholder="Order" required="true"/>
+									   placeholder="Order" required="true" value="${question.sheetOrder}"/>
 							</div>
 							<div class="form-group">
 								<label>Choose a video</label>
 								<select id="videoId" name="videoId" class="form-control">
 									<#if videos??>
 										<#list videos.data as video>
-											<option value="${video.uri}">${video.name}</option>
+											<option value="${video.uri}" <#if question.videoId == video.uri>selected="true"</#if>>${video.name}</option>
 										</#list>
 									</#if>
 								</select>
@@ -66,20 +65,47 @@
 							<div id="selectType" class="form-group">
 								<label>Please choose an answer type</label>
 								<select id="inType" name="inType" class="form-control">
-									<option value="text">Text</option>
-									<option value="textarea">Text Box</option>
-									<option value="radio">Select One</option>
-									<option value="checkbox">Select Many</option>
+									<option value="text" <#if question.inType == "text">selected="true"</#if>>Text</option>
+									<option value="textarea" <#if question.inType == "textarea">selected="true"</#if>>Text Box</option>
+									<option value="radio" <#if question.inType == "radio">selected="true"</#if>>Select One</option>
+									<option value="checkbox" <#if question.inType == "checkbox">selected="true"</#if>>Select Many</option>
 								</select>
 							</div>
+							<input type="hidden" name="id" value="${question.id}">
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 							<input type="hidden" name="options" value=""/>
 						</form>
 						<div id="allOptions">
+							<#assign i = 1 />
+							<#list question.options as option>
+								<div id="option${i}" class="form-group">
+									<div class="input-group" id="">
+										<input type="text" name="option" class="form-control" placeholder="Option #${i}" value="${option}"/>
+									<span class="input-group-btn">
+        								<a id="option${i}" class="btn btn-danger" name="removeOption"><i class="fa fa-times"></i></a>
+      								</span>
+									</div>
+								</div>
+								<#assign i = i+1 />
+							</#list>
 							<div id="addOption" class="form-group">
 							</div>
+							<#if question.options[0]??>
+								<div class="form-group">
+									<a class="btn btn-success" id="addOptionButton">Add Option</a>
+								</div>
+							</#if>
 						</div>
-						<button id="addQuestionButton" class="btn btn-md btn-primary btn-block" type="submit">Add</button>
+						<div class="form-group">
+							<button id="addQuestionButton" class="btn btn-md btn-primary btn-block" type="submit">Save</button>
+						</div>
+						<form id="questionDeleteForm" role="form" method="post" action="/admin/del/question/${question.id}">
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+							<div class="form-group">
+								<button class="btn btn-md btn-danger btn-block" type="submit">Delete</button>
+							</div>
+						</form>
+						<a href="/admin/list/question" class="btn btn-default btn-block">Cancel</a>
 					</div>
 				</div>
 			</div>
@@ -110,8 +136,23 @@
 			<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 			<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 			<script>
+
+				// set delete action and add option button on load if exist
+				window.onload = function() {
+					if ($('a[name="removeOption"]')) {
+						$('a[name="removeOption"]').click(function() {
+							$('div[id="'+$(this).attr('id')+'"]').remove();
+						});
+					}
+					if ($('a[id="addOptionButton"]')) {
+						$('a[id="addOptionButton"]').click(function() {
+							addOption();
+						});
+					}
+				}
+
 				// set variables
-				var i = 1;
+				var i = ${i};
 				var type = 'select[id="inType"]'
 				var addOptionDiv = 'div[id="allOptions"] div[id="addOption"]'
 
@@ -128,7 +169,7 @@
 					i++;
 				}
 
-				// run add option on type select add add option button after input || remove all options on type select
+				// run add option on type select add add optiod button after input || remove all options on type select
 				$(type).change(function() {
 					if ($(type).val() == 'radio' || $(type).val() == 'checkbox') {
 						addOption();

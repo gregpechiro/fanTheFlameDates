@@ -32,7 +32,7 @@
 							<a href="/admin">Home</a>
 						</li>
 						<li>
-							<a href="/admin/add/worksheet">Add Question</a>
+							<a href="/admin/add/question">Add Question</a>
 						</li>
 					</ul>
 				</div>
@@ -57,15 +57,15 @@
 								</tr>
 							</thead>
 							<tbody>
-								<#list worksheets as worksheet>
+								<#list questions as question>
 									<tr>
-										<td>${worksheet.id}</td>
-										<td>${worksheet.videoId}</td>
-										<td>${worksheet.question}</td>
-										<td>${worksheet.sheetOrder}</td>
-										<td>${worksheet.inType?cap_first}</td>
-										<td>${(worksheet.options?size > 0)?string(worksheet.options?join(', '), 'None')}</td>
-										<td><a href="/admin/view/worksheet/${worksheet.id}" id="worksheet_${worksheet.id}">View</a></td>
+										<td>${question.id}</td>
+										<td>${question.videoId}</td>
+										<td>${question.askedQuestion}</td>
+										<td>${question.sheetOrder}</td>
+										<td>${question.inType?cap_first}</td>
+										<td>${(question.options?size > 0)?string(question.options?join(', '), 'None')}</td>
+										<td><a href="/admin/view/question/${question.id}" id="question_${question.id}">View</a></td>
 									</tr>
 								</#list>
 							</tbody>

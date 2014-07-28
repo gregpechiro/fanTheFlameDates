@@ -53,57 +53,55 @@
 			<div class="col-sm-12" >
 				<div class="row well well-lg trans" >
 					<div class="col-sm-10 col-sm-offset-1">
-						<h1 class="col-sm-offset-1">Contact</h1>
-						<form id="contact" role="form" method="post" action="#">
+						<h1>Contact</h1>
+						<form id="contact" role="form" method="post" action="/contact">
 							<div class="col-sm-12">
 								<div class="row col-sm-6">
 									<div class="form-group">
-										<label for="first">Name</label>
-										<input type="text" id="first" name="First Name" class="form-control"
+										<label>First Name</label>
+										<input type="text" id="first" name="first" class="form-control"
 											   placeholder="first" required="true"/>
-										<label for="first"><small>First Name</small></label>
 									</div>
 									<div class="form-group">
-										<label for="email">Email</label>
+										<label>Email</label>
 										<input type="email" id="email" name="email" class="form-control"
 											   placeholder="Email" required="true"/>
-										<label for="email"><small>Enter Email</small></label>
 									</div>
 									<div class="form-group">
-										<label for="phone">Phone Number</label>
+										<label>Phone Number</label>
 										<input type="text" id="phone" name="phone" class="form-control"
 											   placeholder="Phone Number" required=""/>
-										<label for="phone"><small>Format: 123-456-7890</small></label>
+										<label><small>Format: 123-456-7890</small></label>
 									</div>
 								</div>
 								<div class="col-sm-6">
 									<div class="form-group">
-										<label for="last"></label>
+										<label>Last Name</label>
 										<input type="text" id="last" name="last" class="form-control"
 											   placeholder="Last Name" required="true"/>
-										<label for="last"><small>Last Name</small></label>
 									</div>
 									<div class="form-group">
-										<label for="confirm"></label>
+										<label>Confirm Email</label>
 										<input type="email" id="confirm" name="confirm" class="form-control"
 											   placeholder="Confirm Email" required="true"/>
-										<label for="confirm"><small>Confirm Email</small></label>
 									</div>
 								</div>
 							</div>
-							<div class="col-sm-12 form-group">
-								<label for="message">Drop us a quick note or question:</label>
-								<textarea id="message" class="form-control"></textarea>
+							<div class="form-group col-sm-12">
+								<label>Drop us a quick note or askedQuestion:</label>
+								<textarea id="message" name="message" class="form-control" rows="7"
+										  style="resize:none;"></textarea>
 							</div>
+							
 							<div class="col-sm-12">
 								<div class="form-group">
-									<input type="checkbox"> Please email me more information about Fan the Flame Dates <br>
+									<input name="info" value="true" type="checkbox"> Please email me more information about Fan the Flame Dates <br>
 								</div>
 								<div class="form-group">
-									<input type="checkbox"> I have a technical issue. Please contact me. <br>
+									<input name="technical" value="true" type="checkbox"> I have a technical issue. Please contact me. <br>
 								</div>
 								<div class="form-group">
-									<input type="checkbox"> I'm interested in having House on the Rock speak at my church/event <br>
+									<input name="speak" value="true" type="checkbox"> I'm interested in having House on the Rock speak at my church/event <br>
 								</div>
 							</div>
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -117,17 +115,17 @@
 		</div>
 
 		<!-- footer -->
-		<div id="navbar" class="navbar navbar-default navbar-static-bottom navbar-inverse">
+		<div id="navbar" class="footer navbar-default navbar-inverse">
 			<div class="container">
 				<div class="navbar-header">
-					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#footerMenu">
 						<span class="sr-only">Toggle navigation</span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
 				</div>
-				<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<div id="footerMenu" class="collapse navbar-collapse navbar-ex1-collapse">
 					<ul class="nav navbar-nav navbar-right">
 						<li>
 							<a href="#">Live Events</a>
