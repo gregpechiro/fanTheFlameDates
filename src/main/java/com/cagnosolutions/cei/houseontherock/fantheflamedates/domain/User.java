@@ -13,6 +13,7 @@ public class User {
     private String email;
 	private String role;
 	private boolean active;
+	private boolean challengeAccepted;
 	private short challengeProgress;
 	private boolean challengeComplete;
 	
@@ -91,6 +92,24 @@ public class User {
 
 	public void setChallengeComplete(boolean challengeComplete) {
 		this.challengeComplete = challengeComplete;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public boolean isChallengeAccepted() {
+		return challengeAccepted;
+	}
+
+	public void setChallengeAccepted(boolean challengeAccepted) {
+		this.challengeAccepted = challengeAccepted;
+	}
+
+	public void advanceChallenge() {
+		if (challengeAccepted || !challengeComplete) {
+			challengeProgress++;
+		}
 	}
 
 	public String toString() {

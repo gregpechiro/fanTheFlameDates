@@ -37,7 +37,7 @@
 							<a href="#">Forum</a>
 						</li>
 						<li>
-							${(auth)?string('<a href="/register">Register</a>', '<a href="/user/account">My Account</a>')}
+							${(auth)?string('<a href="/register">Register</a>', '<a href="/user">My Account</a>')}
 						</li>
 						<li>
 							${(auth)?string('<a href="/user">Login</a>', '<a href="/logout">Logout</a>')}
@@ -71,7 +71,7 @@
 							<div class="panel-heading">Work Book</div>
 							<div class="panel-body">
 								<#assign i = 0 />
-								<form id="worksheet" role="form" method="post" action="/workbook">
+								<form id="worksheet">
 									<#list questions as question>
 										<#switch question.inType>
 											<#case "radio">
@@ -113,7 +113,7 @@
 									<br>
 								</form>
 
-								<form id="submitForm" action="/test" role="form" method="post">
+								<form id="submitForm" action="/worksheet" role="form" method="post">
 									<div class="checkbox">
 										<label>
 											<input type="checkbox" name="save" value="true"> Save completed workbook in my profile.
@@ -126,7 +126,7 @@
 									</div>
 									<div class="checkbox">
 										<label>
-											<input type="checkbox" name="submit" value="true"> Anonymously submit my completed workbook to Fan the Flame Dates.
+											<input type="checkbox" name="send" value="true"> Anonymously submit my completed workbook to Fan the Flame Dates.
 										</label>
 									</div>
 									<input type="hidden" name="userId" value="${username}">
@@ -196,8 +196,10 @@
 				};
 
 				$('button[id="submitWorksheet"]').click(function() {
-					obj = FormToObject($('form[id="worksheet"]'));
-
+					obj = formToObject($('form[id="worksheet"]'));
+					j = JSON.stringify(obj);
+					$('input[id="answers"]').val(j);
+					$('form[id="submitForm"]').submit();
 				});
 
 			</script>

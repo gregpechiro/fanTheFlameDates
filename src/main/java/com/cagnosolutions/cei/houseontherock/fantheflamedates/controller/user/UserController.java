@@ -32,7 +32,7 @@ public class UserController {
         if (username.equals("admin")) {
             return "redirect:/admin";
         }
-		model.addAttribute("username", username);
+		model.addAttribute("user", userService.findById(username));
 		return "user/home";
 	}
 
