@@ -26,8 +26,8 @@ public class VideoController {
 	@Autowired
 	private FlashService flashService;
 
-	// list get
-	@RequestMapping(value = "/video", method = RequestMethod.GET)
+	// GET list
+	@RequestMapping(value = "/list/video", method = RequestMethod.GET)
 	public String list(Model model, @RequestParam(value = "sort", required = false) String sort, @RequestParam(value = "order", required = false) String order) {
 		try {
 			VimeoAPI vimeo = new VimeoAPI();
@@ -38,8 +38,8 @@ public class VideoController {
 		return "admin/video/list";
 	}
 
-	// add/edit get
-	@RequestMapping(value = "/video/view", method = RequestMethod.GET)
+	// GET add/edit
+	@RequestMapping(value = "/view/video", method = RequestMethod.GET)
 	public String addForm(Model model, @RequestParam(value="video_uri") String videoUri) {
 		try {
 			VimeoAPI vimeo = new VimeoAPI();
@@ -50,7 +50,7 @@ public class VideoController {
 		return "admin/video/view";
 	}
 
-	// add post
+	// POST add edit
 	@RequestMapping(value = "/video", method = RequestMethod.POST)
 	public Object add(VimeoVideo video, RedirectAttributes attr) {
 		try {
@@ -61,11 +61,13 @@ public class VideoController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		flashService.flash(attr, "update.success");
-		return "redirect:/admin/video";
+		//flashService.flash(attr, "update.success");
+		attr.addFlashAttribute("alertSuccess", "Video updated successfully");
+		return "redirect:/admin/list/video";
 	}
 
-	@RequestMapping(value="/video/upload", method = RequestMethod.GET)
+	// GET upload
+	@RequestMapping(value="/upload/video", method = RequestMethod.GET)
 	public String upload(Model model) {
 		try {
 			VimeoAPI vimeo = new VimeoAPI();
@@ -76,7 +78,8 @@ public class VideoController {
 		return "admin/video/upload";
 	}
 
-	@RequestMapping(value="/del/video")
+	//
+	@RequestMapping(value="/del/video", method = RequestMethod.POST)
 	public String delete(@RequestParam(value="videoUri") String videoUri, RedirectAttributes attr) {
 		try {
 			VimeoAPI vimeo = new VimeoAPI();
@@ -84,7 +87,8 @@ public class VideoController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		flashService.flash(attr, "delete.success");
-		return "redirect:/admin/video";
+		//flashService.flash(attr, "delete.success");
+		attr.addFlashAttribute("alertSuccess", "Video was deleted successfully");
+		return "redirect:/admin/list/video";
 	}
 }

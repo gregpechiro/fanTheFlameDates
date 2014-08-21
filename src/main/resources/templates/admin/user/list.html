@@ -1,53 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-
 	<head id="head">
-		
 		<title>Admin</title>
-		<meta charset="utf-8"/>	
-		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-		<meta name="description" content="admin user list"/>
-		<meta name="author" content="scott cagno"/>
-		<!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->  
-		<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet"/>
-		<link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"/>		
-		<link href="http://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css"/>
-		<link href="/static/css/custom.css" rel="stylesheet" type="text/css"/>
+
+		<#include "../../stubs/header.html"/>
 
 	</head>
+	<body>
 
-	<body id="body">
-		<!-- navbar -->		
-		<div id="navbar" class="navbar navbar-default navbar-static-top navbar-inverse">
-			<div class="container">
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-						<span class="sr-only">Toggle navigation</span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-					<a class="navbar-brand" href="#">Admin List Users</a>
-				</div>
-				<div class="collapse navbar-collapse navbar-ex1-collapse">
-					<ul class="nav navbar-nav navbar-right">
-						<li>
-							<a href="/admin">Home</a>
-						</li>
-						<li>
-							<a href="/logout">Logout</a>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</div>
+		<#include "../../stubs/adminNavbar.html"/>
 
 		<!-- content -->
 		<div id="content" class="container">
 			<div class="panel panel-default">
 	  			<div class="panel-heading"><a class="btn btn-default btn-sm" href="/admin/add/user">Add User</a></div>
 	  			<div class="panel-body">
-					${(msg)! ""}
 	  				<div class="table-responsive">
 		  				<table class="table">
 							<thead>
@@ -70,9 +37,6 @@
 										<td>${(user.active == true)?string("True", "False")}</td>
 										<td>
                                             <form method="post" action="/admin/del/user/${user.username}">
-                                                <a class="btn btn-default btn-xs" href="/admin/view/user/${user.username}">
-                                                    <i class="fa fa-eye"></i>
-                                                </a>
                                                 <a class="btn btn-default btn-xs" href="/admin/edit/user/${user.username}">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
@@ -87,17 +51,13 @@
 					</div>
 				</div>
 			</div>
-		
-		<!-- footer -->
-		<div id="footer" class="container"></div>
+		</div>
 
 		<!-- scripts -->
 		<div id="scripts">
-			<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-			<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-			<script src="/static/js/custom.js"></script>			
+
+			<#include "../../stubs/scripts.html"/>
+
 		</div>
-
 	</body>
-
 </html>
