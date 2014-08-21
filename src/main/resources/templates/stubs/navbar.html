@@ -1,0 +1,53 @@
+<!-- navbar -->
+<div id="navbar" class="navbar navbar-default navbar-static-top navbar-inverse">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbarMenu">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="/home">Fan The Flame Dates</a>
+		</div>
+		<div id="navbarMenu" class="collapse navbar-collapse navbar-ex1-collapse">
+			<ul class="nav navbar-nav navbar-right">
+				<li>
+					<a href="/list/video">Videos</a>
+				</li>
+				<li>
+					<a href="#">Forum</a>
+				</li>
+				<li>
+					${(auth)?string('<a href="register">Register</a>', '<a href="/user">My Account</a>')}
+				</li>
+				<li>
+					${(auth)?string('<a href="/user">Login</a>', '<a href="/logout">Logout</a>')}
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+<#if alert??>
+	<div id="alert" class="col-sm-10 col-sm-offset-1">
+		<div class="alert alert-info alert-dismissable text-center">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			${alert}
+		</div>
+	</div>
+<#elseif alertError??>
+	<div id="alert" class="col-sm-10 col-sm-offset-1">
+		<div class="alert alert-danger alert-dismissable text-center">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			${alertError}
+		</div>
+	</div>
+<#elseif alertSuccess??>
+	<div id="alert" class="col-sm-10 col-sm-offset-1">
+		<div class="alert alert-success alert-dismissable text-center">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			${alertSuccess}
+		</div>
+	</div>
+</#if>

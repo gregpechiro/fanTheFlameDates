@@ -25,18 +25,19 @@ public class UserController {
 	@Autowired
 	private FlashService flashService;
 
-    // home get
+    // GET home
 	@RequestMapping(value="/user", method=RequestMethod.GET)
 	public String home(Principal principal, Model model) {
         String username = principal.getName();
         if (username.equals("admin")) {
             return "redirect:/admin";
         }
+		model.addAttribute("auth", (principal == null));
 		model.addAttribute("user", userService.findById(username));
 		return "user/home";
 	}
 
-    // account get
+    /*// GET account
     @RequestMapping(value="/user/account", method = RequestMethod.GET)
     public String accountForm(Principal principal, Model model) {
         String username = principal.getName();
@@ -45,65 +46,74 @@ public class UserController {
             return "user/account";
         }
         return "user/home";
-    }
+    }*/
 
-    // account post
-    @RequestMapping(value="/user/account", method = RequestMethod.POST)
+    // POST update account
+    @RequestMapping(value="/user", method = RequestMethod.POST)
     public String account(Principal principal, Model model, User user, RedirectAttributes attr) {
         String username = principal.getName();
         model.addAttribute("user", user);
         if(username != null) {
             userService.updateUser(username, user);
-			flashService.flash(attr, "update.success");
-            return "redirect:/user/account";
+			//flashService.flash(attr, "update.success");
+			attr.addFlashAttribute("alertSuccess", "Account was changed successfully");
+            return "redirect:/user";
         }
-		flashService.flash(attr, "update.error");
-        return "redirect:/user/account";
+		//flashService.flash(attr, "update.error");
+		attr.addFlashAttribute("alertError", "Error updating account");
+        return "redirect:/user";
     }
 
-    // edit pass form
-    @RequestMapping(value="/user/account/password", method=RequestMethod.GET)
+    // GET edit pass
+    @RequestMapping(value="/user/password", method=RequestMethod.GET)
     public String editPassForm(Principal principal, Model model) {
         model.addAttribute("user", userService.findById(principal.getName()));
+		model.addAttribute("auth", (principal == null));
         return "user/editpass";
     }
 
-    // edit pass
-    @RequestMapping(value="/user/account/password", method=RequestMethod.POST)
+    // POST edit pass
+    @RequestMapping(value="/user/password", method=RequestMethod.POST)
     public String editPass(Principal principal, @RequestParam("password") String password, @RequestParam("confirm") String confirm, RedirectAttributes attr) {
         if(password == null || confirm == null || !password.equals(confirm)) {
-			flashService.flash(attr, "password.error");
-            return "redirect:/user/account/password";
+			//flashService.flash(attr, "password.error");
+			attr.addFlashAttribute("alertError", "Error changing password");
+            return "redirect:/user/password";
         }
         User user = userService.findById(principal.getName());
         user.setPassword(new BCryptPasswordEncoder().encode(password));
         userService.update(user);
-		flashService.flash(attr, "password.success");
-        return "redirect:/user/account";
+		//flashService.flash(attr, "password.success");
+		attr.addFlashAttribute("alertSuccess", "Password was changed successfully");
+        return "redirect:/user";
     }
 
-    // edit username form
-    @RequestMapping(value="/user/account/username", method=RequestMethod.GET)
+    // GET edit username
+    @RequestMapping(value="/user/username", method=RequestMethod.GET)
     public String editUsernameForm(Principal principal, Model model) {
         model.addAttribute("user", userService.findById(principal.getName()));
+		model.addAttribute("auth", (principal == null));
         return "user/edituser";
     }
 
-    // edit username
-    @RequestMapping(value="/user/account/username", method=RequestMethod.POST)
+    // POST edit username
+    @RequestMapping(value="/user/username", method=RequestMethod.POST)
     public String editUsername(Principal principal, @RequestParam("username") String username, RedirectAttributes attr) {
         if(username == null || username.equals(principal.getName()) || userService.exists(username)) {
-			flashService.flash(attr, "username.error");
-			return "redirect:/user/account/username";
+			//flashService.flash(attr, "username.error");
+			attr.addFlashAttribute("alertError", "Error changing username");
+			return "redirect:/user/username";
 		}
         if(userService.updateUsername(principal.getName(), username)) {
             User user = userService.findById(username);
             SecurityContextHolder.getContext().setAuthentication(
                     new UsernamePasswordAuthenticationToken(user, user.getPassword()));
-			flashService.flash(attr, "username.success");
-            return "redirect:/user/account";
+			//flashService.flash(attr, "username.success");
+			attr.addFlashAttribute("alertSuccess", "Username was successfully changed");
+            return "redirect:/user";
         }
-		flashService.flash(attr, "username.error");
-        return "redirect:/user/account/username";
+		//flashService.flash(attr, "username.error");
+		attr.addFlashAttribute("alertError", "Error changing username");
+        return "redirect:/user/username";
     }
 }

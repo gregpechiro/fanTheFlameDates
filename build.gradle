@@ -5,7 +5,7 @@ apply plugin: 'spring-boot'
 buildscript {
 	
 	ext {
-		springBootVersion = "1.1.1.RELEASE"
+		springBootVersion = "1.1.5.RELEASE"
 	}
 	
 	repositories {
@@ -21,7 +21,7 @@ jar {
 
 	baseName = "houseontherock"
 
-    manifest {
+	manifest {
 		attributes "Class-Path" : "."
 	}
 }
@@ -37,10 +37,10 @@ dependencies {
 	compile 'org.springframework.security:spring-security-config:3.2.4.RELEASE'
 	
 	// spring
-    compile "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
-	compile "org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}"
-	compile "org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}"
-	compile "org.springframework.boot:spring-boot-starter-freemarker:${springBootVersion}"
+    compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
+	compile("org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}")
+	compile("org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}")
+	compile("org.springframework.boot:spring-boot-starter-freemarker:${springBootVersion}")
 
 	// hibernate
 	compile "org.hibernate:hibernate-entitymanager:4.3.5.Final"

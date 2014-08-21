@@ -19,13 +19,14 @@ public class User {
 	
 	public User() {}
 
-	public User(String username, String password, String name, String email, String role, boolean active, short challengeProgress, boolean challengeComplete) {
+	public User(String username, String password, String name, String email, String role, boolean active, boolean challengeAccepted, short challengeProgress, boolean challengeComplete) {
 		this.username = username;
 		this.password = password;
 		this.name = name;
 		this.email = email;
 		this.role = role;
 		this.active = active;
+		this.challengeAccepted = challengeAccepted;
 		this.challengeProgress = challengeProgress;
 		this.challengeComplete = challengeComplete;
 	}
