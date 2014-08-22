@@ -13,15 +13,19 @@
 		<!-- content -->
 		<div id="content" class="container">
 			<div class="panel panel-default">
-	  			<div class="panel-heading"><a class="btn btn-default btn-sm" href="/admin/add/user">Add User</a></div>
-	  			<div class="panel-body">
-	  				<div class="table-responsive">
-		  				<table class="table">
+				<div class="panel-heading col-sm-12">
+					Users
+					<a href="/admin/add/user" class="btn btn-default btn-xs pull-right">Add User</a>
+				</div>
+				<div class="panel-body">
+					<div class="table-responsive">
+						<table class="table table-striped">
 							<thead>
 								<tr>
 									<th>Name</th>
 									<th>Email</th>
 									<th>Username</th>
+									<th>Challenge</th>
 									<th>Role</th>
 									<th>Active</th>
 									<th>Actions</th>
@@ -33,21 +37,48 @@
 										<td>${user.name}</td>
 										<td>${user.email}</td>
 										<td>${user.username}</td>
+										<td>
+											<#if user.challengeAccepted>
+												${user.challengeProgress}/12
+											</#if>
+										</td>
 										<td>${user.role}</td>
 										<td>${(user.active == true)?string("True", "False")}</td>
 										<td>
-                                            <form method="post" action="/admin/del/user/${user.username}">
-                                                <a class="btn btn-default btn-xs" href="/admin/edit/user/${user.username}">
-                                                    <i class="fa fa-edit"></i>
-                                                </a>
-                                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                                <button class="btn btn-default btn-xs" type="submit"><i class="fa fa-trash-o"></i></button>
-                                            </form>
-                                        </td>
+											<a href="/admin/edit/user/${user.username}" id="" class="">Edit</a>
+											<a href="#" class="text-danger userDel" data-id="${user.username}">Delete</a>
+										</td>
 									</tr>
 								</#list>
 							</tbody>
-						</table>	
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="deleteUserModal" tabindex="-1" role="dialog" aria-labelledby=""  aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true">&times;</span>
+							<span class="sr-only">Close</span>
+						</button>
+						<h4 class="modal-title" id="myModalLabel">Delete User</h4>
+					</div>
+					<div class="modal-body text-center">
+						<p>Deleting this user will permanently remove it.</p>
+						<p>Are you sure you would like to delete?</p>
+						<form id="deleteUserForm" method="post">
+							<a class="btn btn-success"  data-dismiss="modal">
+								No
+							</a>
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+							<button class="btn btn-danger" type="submit">
+								Yes
+							</button>
+						</form>
 					</div>
 				</div>
 			</div>
@@ -57,6 +88,13 @@
 		<div id="scripts">
 
 			<#include "../../stubs/scripts.html"/>
+
+			<script>
+				$('a.userDel').click(function() {
+					$('form[id="deleteUserForm"]').attr('action', '/admin/del/user/'+this.getAttribute('data-id'));
+					$('div[id="deleteUserModal"]').modal();
+				});
+			</script>
 
 		</div>
 	</body>

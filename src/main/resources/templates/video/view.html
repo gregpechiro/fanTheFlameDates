@@ -41,7 +41,7 @@
 												<#list question.options as option>
 													<div class="radio">
 														<label>
-															<input id="question_${i}" type="radio" name="${question.askedQuestion}" id="optionsRadios1" value="option1">
+															<input id="question_${i}" type="radio" name="${question.askedQuestion}" id="optionsRadios1" value="${option}">
 															${option}
 														</label>
 													</div>
@@ -105,6 +105,8 @@
 			</div>
 		</div>
 
+		<#include "../stubs/modals.html"/>
+
 		<#include "../stubs/footer.html"/>
 
 		<!-- scripts -->
@@ -132,8 +134,8 @@
 
 				$('button[id="submitWorksheet"]').click(function() {
 					obj = formToObject($('form[id="worksheet"]'));
-					j = JSON.stringify(obj);
-					$('input[id="answers"]').val(j);
+					//j = JSON.stringify(obj);
+					$('input[id="answers"]').val(obj);
 					$('form[id="submitForm"]').submit();
 				});
 

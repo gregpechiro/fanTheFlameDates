@@ -29,10 +29,10 @@ public class WorksheetService {
 		dao.save(worksheet);
 		if (worksheet.isEmail()) {
 			User user = userService.findById(worksheet.getUserId());
-			mailService.sendSimpleEmail("noreply@fantheflamedates.com", "Worksheet", worksheet.getAnswers(), user.getEmail());
+			mailService.sendSimpleEmail("noreply@noreplyfantheflamedates.com", "Worksheet", worksheet.getAnswers(), user.getEmail());
 		}
 		if (worksheet.isSend()) {
-			mailService.sendSimpleEmail("noreply@fantheflamedates.com", "Worksheet", worksheet.getAnswers(), "gregpechiro@gmail.com");
+			mailService.sendSimpleEmail("noreply@noreplyfantheflamedates.com", "Worksheet", worksheet.getAnswers(), "");
 		}
 	}
 

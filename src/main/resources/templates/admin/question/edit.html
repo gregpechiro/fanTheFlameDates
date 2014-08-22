@@ -24,16 +24,6 @@
 								<input type="text" id="sheetOrder" name="sheetOrder" class="form-control"
 									   placeholder="Order" required="true" value="${question.sheetOrder}"/>
 							</div>
-							<div class="form-group">
-								<label>Choose a video</label>
-								<select id="videoId" name="videoId" class="form-control">
-									<#if videos??>
-										<#list videos.data as video>
-											<option value="${video.uri}" <#if question.videoId == video.uri>selected="true"</#if>>${video.name}</option>
-										</#list>
-									</#if>
-								</select>
-							</div>
 							<div id="selectType" class="form-group">
 								<label>Please choose an answer type</label>
 								<select id="inType" name="inType" class="form-control">
@@ -44,6 +34,7 @@
 								</select>
 							</div>
 							<input type="hidden" name="id" value="${question.id}">
+							<input type="hidden" name="videoId" value="${question.videoId}">
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 							<input type="hidden" name="options" value=""/>
 						</form>
@@ -71,13 +62,9 @@
 						<div class="form-group">
 							<button id="addQuestionButton" class="btn btn-md btn-primary btn-block" type="submit">Save</button>
 						</div>
-						<form id="questionDeleteForm" role="form" method="post" action="/admin/del/question/${question.id}">
-							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-							<div class="form-group">
-								<button class="btn btn-md btn-danger btn-block" type="submit">Delete</button>
-							</div>
-						</form>
-						<a href="/admin/list/question" class="btn btn-default btn-block">Cancel</a>
+						<div class="form-group">
+							<a href="/admin/edit/video?video_uri=${question.videoId}" class="btn btn-default btn-block">Cancel</a>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -142,16 +129,16 @@
 					i++;
 				}
 
-				// run add option on type select add add optiod button after input || remove all options on type select
+				// run add option on type select add add option button after input || remove all options on type select
 				$(type).change(function() {
+					$('div[id="allOptions"]').html($('div[id="nextOptionDiv"]').html());
 					if ($(type).val() == 'radio' || $(type).val() == 'checkbox') {
+						$('div[id="allOptions"]').html($('div[id="nextOptionDiv"]').html());
 						addOption();
 						$(addOptionDiv).after($('div[id="nextOptionButton"]').html());
 						$('a[id="addOptionButton"]').click(function() {
 							addOption();
 						});
-					} else {
-						$('div[id="allOptions"]').html($('div[id="nextOptionDiv"]').html());
 					}
 				});
 

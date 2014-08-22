@@ -11,9 +11,11 @@
 		<#include "../../stubs/adminNavbar.html"/>
 
 		<div class="container">
-			${(msg)!}
 			<div id="table" class="panel panel-default">
-				<div class="panel-heading">Questions</div>
+				<div class="panel-heading col-sm-12">
+					Questions
+					<a href="/admin/add/question" class="btn btn-default btn-xs pull-right">Add Question</a>
+				</div>
 				<div class="panel-body">
 					<div id="questions" class="table-responsive">
 						<table class="table table-striped">
@@ -25,6 +27,7 @@
 									<th>Sheet Order</th>
 									<th>Type</th>
 									<th>Options</th>
+									<th></th>
 								</tr>
 							</thead>
 							<tbody>
@@ -36,7 +39,10 @@
 										<td>${question.sheetOrder}</td>
 										<td>${question.inType?cap_first}</td>
 										<td>${(question.options?size > 0)?string(question.options?join(', '), 'None')}</td>
-										<td><a href="/admin/view/question/${question.id}" id="question_${question.id}">View</a></td>
+										<td>
+											<a href="/admin/edit/question/${question.id}">Edit</a>
+											<a href="#" class="text-danger questionDel" data-id="${question.id}">Delete</a>
+										</td>
 									</tr>
 								</#list>
 							</tbody>
@@ -46,11 +52,44 @@
 			</div>
 		</div>
 
+
+		<div class="modal fade" id="deleteQuestionModal" tabindex="-1" role="dialog" aria-labelledby=""  aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true">&times;</span>
+							<span class="sr-only">Close</span>
+						</button>
+						<h4 class="modal-title" id="myModalLabel">Delete Question</h4>
+					</div>
+					<div class="modal-body text-center">
+						<p>Deleting this question will permanently remove it.</p>
+						<p>Are you sure you would like to delete?</p>
+						<form id="deleteQuestionForm" method="post">
+							<a class="btn btn-success"  data-dismiss="modal">
+								No
+							</a>
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+							<button class="btn btn-danger" type="submit">
+								Yes
+							</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<!-- scripts -->
 		<div id="scripts">
 
 			<#include "../../stubs/scripts.html"/>
-
+			<script>
+				$('a.questionDel').click(function() {
+					$('form[id="deleteQuestionForm"]').attr('action', '/admin/del/question/'+this.getAttribute('data-id'));
+					$('div[id="deleteQuestionModal"]').modal();
+				});
+			</script>
 		</div>
 	</body>
 </html>

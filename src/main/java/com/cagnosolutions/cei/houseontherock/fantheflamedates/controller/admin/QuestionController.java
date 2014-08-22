@@ -28,35 +28,31 @@ public class QuestionController {
 	@Autowired
 	private FlashService flashService;
 
-	// list get
+	// GET list
 	@RequestMapping(value = "/list/question", method = RequestMethod.GET)
 	public String list(Model model, @RequestParam(value = "sort", required = false) String sort, @RequestParam(value = "order", required = false) String order) {
 		model.addAttribute("questions", questionService.findAllSorted(sort, order));
 		return "admin/question/list";
 	}
 
-	// add get
+	// GET add
 	@RequestMapping(value = "/add/question", method = RequestMethod.GET)
-	public String addForm(Model model) {
-		try {
-			VimeoAPI vimeo = new VimeoAPI();
-			model.addAttribute("videos", vimeo.getInfo("https://api.vimeo.com/me/videos"));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public String addForm(@RequestParam(value="video_uri") String videoUri, Model model) {
+		model.addAttribute("videoUri", videoUri);
 		return "admin/question/add";
 	}
 
-	// add post
+	// POST add
 	@RequestMapping(value = "/add/question", method = RequestMethod.POST)
 	public String add(Question question, RedirectAttributes attr) {
 		questionService.insert(question);
-		flashService.flash(attr, "update.success");
-		return "redirect:/admin/list/question";
+		//flashService.flash(attr, "update.success");
+		attr.addFlashAttribute("alertSuccess", "Successfully updated question");
+		return "redirect:/admin/edit/video?video_uri=" + question.getVideoId();
 	}
 
-	// view get
-	@RequestMapping(value = "/view/question/{id}", method = RequestMethod.GET)
+	// GET edit
+	@RequestMapping(value = "/edit/question/{id}", method = RequestMethod.GET)
 	public String view(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("question", questionService.findById(id));
 		try {
@@ -65,14 +61,15 @@ public class QuestionController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "admin/question/view";
+		return "admin/question/edit";
 	}
 
-	// delete post
+	// POST delete
 	@RequestMapping(value = "/del/question/{id}", method = RequestMethod.POST)
-	public String delete(@PathVariable("id") Long id, RedirectAttributes attr) {
+	public String delete(@PathVariable("id") Long id, @RequestParam(value = "videoUri") String videoUri, RedirectAttributes attr) {
 		questionService.delete(questionService.findById(id));
-		flashService.flash(attr, "delete.success");
-		return "redirect:/admin/list/question";
+		//flashService.flash(attr, "delete.success");
+		attr.addFlashAttribute("alertSuccess", "Successfully deleted question");
+		return "redirect:/admin/edit/video?video_uri=" + videoUri;
 	}
 }

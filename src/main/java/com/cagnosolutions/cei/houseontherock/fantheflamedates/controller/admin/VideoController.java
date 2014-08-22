@@ -39,15 +39,16 @@ public class VideoController {
 	}
 
 	// GET add/edit
-	@RequestMapping(value = "/view/video", method = RequestMethod.GET)
+	@RequestMapping(value = "/edit/video", method = RequestMethod.GET)
 	public String addForm(Model model, @RequestParam(value="video_uri") String videoUri) {
 		try {
 			VimeoAPI vimeo = new VimeoAPI();
 			model.addAttribute("video", vimeo.getInfo( "https://api.vimeo.com" + videoUri));
+			model.addAttribute("questions", questionService.findByVideoId(videoUri));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "admin/video/view";
+		return "admin/video/edit";
 	}
 
 	// POST add edit
@@ -63,7 +64,7 @@ public class VideoController {
 		}
 		//flashService.flash(attr, "update.success");
 		attr.addFlashAttribute("alertSuccess", "Video updated successfully");
-		return "redirect:/admin/list/video";
+		return "redirect:/admin/edit/video?video_uri=" + video.getVideoUri();
 	}
 
 	// GET upload
@@ -71,7 +72,7 @@ public class VideoController {
 	public String upload(Model model) {
 		try {
 			VimeoAPI vimeo = new VimeoAPI();
-			model.addAttribute("upload", vimeo.postInfo("https://api.vimeo.com/me/videos", "redirect_url=localhost:8080/admin/video/view"));
+			model.addAttribute("upload", vimeo.postInfo("https://api.vimeo.com/me/videos", "redirect_url=localhost:8080/admin/edit/video"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

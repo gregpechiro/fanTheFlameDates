@@ -1,0 +1,68 @@
+<!-- login modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="overflow-y: auto; top:25%;">
+	<div class="modal-dialog modal-sm">
+		<div class="row well well-sm">
+			<#if alertError??>
+				<div class="alert alert-danger alert-dismissable text-center">
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+					${alertError}
+				</div>
+			</#if>
+			<#if alertSuccess??>
+				<div class="alert alert-success alert-dismissable text-center">
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+					${alertSuccess}
+				</div>
+			</#if>
+			<form role="form" method="post" action="/login">
+				<div class="form-group">
+					<input type="text" id="user" name="username" class="form-control" placeholder="Username" required="true" autofocus="true"/>
+				</div>
+				<div class="form-group">
+					<input type="password" id="pass" name="password" class="form-control" placeholder="Password" required="true"/>
+				</div>
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+				<div class="form-group">
+					<button class="btn btn-md btn-primary btn-block" type="submit">Login</button>
+				</div>
+				<a class="btn btn-default btn-block" style="color:#000;" data-dismiss="modal">Cancel</a>
+			</form>
+		</div>
+	</div>
+</div>
+
+<!-- Register modal -->
+<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="overflow-y: auto; top:10%;">
+	<div class="modal-dialog modal-sm">
+		<div class="row well well-sm">
+			<#if alertError??>
+				<div class="alert alert-danger alert-dismissable">
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+					${alertError}
+				</div>
+			</#if>
+			<form role="form" method="post" action="register">
+				<div class="form-group">
+					<input type="text" id="name" name="name" class="form-control" placeholder="Name" required="true" autofocus="true"/>
+				</div>
+				<div class="form-group">
+					<input type="email" id="email" name="email" class="form-control" placeholder="Email" required="true"/>
+				</div>
+				<div class="form-group">
+					<input type="text" id="username" name="username" class="form-control" placeholder="Username" required="true"/>
+				</div>
+				<div class="form-group">
+					<input type="password" id="password" name="password" class="form-control" placeholder="Password" required="true"/>
+				</div>
+				<div class="form-group">
+					<input type="password" id="confirm" name="confirm" class="form-control" placeholder="Confirm" required="true"/>
+				</div>
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+				<div class="form-group">
+					<button class="btn btn-md btn-primary btn-block" type="submit">Sign up</button>
+				</div>
+				<a class="btn btn-default btn-block" style="color:#000;" data-dismiss="modal">Cancel</a>
+			</form>
+		</div>
+	</div>
+</div>

@@ -23,21 +23,21 @@ public class UserController {
 	@Autowired
 	private FlashService flashService;
 
-    // list all
+    // GET list
     @RequestMapping(value="/list/user", method=RequestMethod.GET)
     public String list(Model model, @RequestParam(value="sort", required=false) String sort, @RequestParam(value="order", required=false) String order) {
         model.addAttribute("users", userService.findAllSorted(sort, order));
         return "admin/user/list";
     }
 
-    // add new form
+    // GET add
     @RequestMapping(value="/add/user", method=RequestMethod.GET)
     public String addForm(Model model) {
         model.addAttribute("user", new User());
         return "admin/user/add";
     }
 
-    // add new
+    // POST add
     @RequestMapping(value="/add/user", method=RequestMethod.POST)
     public String add(User user, RedirectAttributes attr) {
         if (!userService.exists(user.getUsername()) && userService.usernameIsValid(user.getUsername())) {
@@ -45,84 +45,86 @@ public class UserController {
             user.setRole("ROLE_USER");
             user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
             userService.insert(user);
-			flashService.flash(attr, "add.success");
+			//flashService.flash(attr, "add.success");
+			attr.addFlashAttribute("alertSuccess", "User added successfully");
             return "redirect:/admin/list/user";
         }
-		flashService.flash(attr, "add.error");
+		//flashService.flash(attr, "add.error");
+		attr.addFlashAttribute("alertError", "Error adding user");
         return "redirect:/admin/add/user";
     }
 
-    // display
-    @RequestMapping(value="/view/user/{id}", method=RequestMethod.GET)
-    public String view(@PathVariable("id") String id, Model model) {
-        model.addAttribute("user", userService.findById(id));
-        return "admin/user/view";
-    }
-
-    // delete
+    // POST delete
     @RequestMapping(value="/del/user/{id}", method=RequestMethod.POST)
     public String delete(@PathVariable("id") String id, RedirectAttributes attr) {
-        userService.delete(userService.findById(id));
-		flashService.flash(attr, "delete.success");
+    	userService.delete(userService.findById(id));
+		//flashService.flash(attr, "delete.success");
+		attr.addFlashAttribute("alertSuccess", "Successfully deleted user");
         return "redirect:/admin/list/user";
     }
 
-    // edit form
+    // GET edit
     @RequestMapping(value="/edit/user/{id}", method=RequestMethod.GET)
     public String editForm(@PathVariable("id") String id, Model model) {
         model.addAttribute("user", userService.findById(id));
         return "admin/user/edit";
     }
 
-    // edit
+    // POST edit
     @RequestMapping(value="/edit/user/{id}", method=RequestMethod.POST)
     public String edit(@PathVariable("id") String id, User user, RedirectAttributes attr) {
         userService.updateUser(id, user);
-		flashService.flash(attr, "update.user.success");
+		//flashService.flash(attr, "update.user.success");
+		attr.addFlashAttribute("alertSuccess", "Successfully updated user");
         return "redirect:/admin/edit/user/" + id;
     }
 
-    // edit pass form
+    // GET edit pass
     @RequestMapping(value="/edit/user/{id}/password", method=RequestMethod.GET)
     public String editPassForm(@PathVariable("id") String id, Model model) {
         model.addAttribute("user", userService.findById(id));
-        return "admin/user/edit/pass";
+        return "admin/user/editpass";
     }
 
-    // edit pass
+    // POST edit pass
     @RequestMapping(value="/edit/user/{id}/password", method=RequestMethod.POST)
     public String editPass(@PathVariable("id") String id, @RequestParam("password") String password, @RequestParam("confirm") String confirm, RedirectAttributes attr) {
         if(password == null || confirm == null || !password.equals(confirm)) {
-			flashService.flash(attr, "password.error");
+			//flashService.flash(attr, "password.error");
+			attr.addFlashAttribute("alertError", "Error changing password");
             return "redirect:/admin/edit/user/" + id + "/password";
         }
         User user = userService.findById(id);
         user.setPassword(new BCryptPasswordEncoder().encode(password));
         userService.update(user);
-		flashService.flash(attr, "password.success");
+		//flashService.flash(attr, "password.success");
+		attr.addFlashAttribute("alertSuccess", "Successfully changed password");
         return "redirect:/admin/edit/user/" + id;
     }
 
-    // edit user form
+    // GET edit username
     @RequestMapping(value="/edit/user/{id}/username", method=RequestMethod.GET)
     public String editUserForm(@PathVariable("id") String id, Model model) {
         model.addAttribute("user", userService.findById(id));
-        return "admin/user/edit/user";
+        return "admin/user/edituser";
     }
 
-    // edit user
+    // POST edit username
     @RequestMapping(value="/edit/user/{id}/username", method=RequestMethod.POST)
     public String editUser(@PathVariable("id") String id, @RequestParam("username") String username, RedirectAttributes attr) {
         if(username == null || username.equals(id) || userService.exists(username)) {
-			flashService.flash(attr, "update.user.error");
+			//flashService.flash(attr, "update.user.error");
+			attr.addFlashAttribute("alertError", "Error changing username");
 			return "redirect:/admin/edit/user/" + id + "/username";
 		}
         if(userService.updateUsername(id, username)) {
-			flashService.flash(attr, "update.user.success");
+			//flashService.flash(attr, "update.user.success");
+			attr.addFlashAttribute("alertSuccess", "Successfully changed username");
 			return "redirect:/admin/edit/user/" + username;
 		}
         else {
-			flashService.flash(attr, "update.user.error");
+			//flashService.flash(attr, "update.user.error");
+			attr.addFlashAttribute("alertError", "Error changing username");
 			return "redirect:/admin/edit/user/" + id + "/username";
 		}
 	}

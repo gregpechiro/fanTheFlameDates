@@ -54,4 +54,6 @@ dependencies {
     compile "javax.mail:mail:1.4.7"
 
     compile "org.apache.httpcomponents:httpclient:4.3.4"
+
+	compile 'com.fasterxml.jackson.core:jackson-core:2.4.2'
 }

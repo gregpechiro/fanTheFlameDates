@@ -23,18 +23,19 @@ public class MiscController {
 	private UserService userService;
 
 	@Autowired
-	private WorksheetService worksheetService;
-
-	@Autowired
 	private FlashService flashService;
 
+	@Autowired
+	private WorksheetService worksheetService;
+
 	@RequestMapping(value = "/worksheet", method = RequestMethod.POST)
-	public String worksheet(Worksheet worksheet) {
+	public String worksheet(Worksheet worksheet, RedirectAttributes attr) {
 		User user = userService.findById(worksheet.getUserId());
 		user.advanceChallenge();
 		userService.update(user);
 		worksheetService.add(worksheet);
-		return "redirect:" + worksheet.getVideoId();
+		attr.addFlashAttribute("alertSuccess", "Thanks for watching.");
+		return "redirect:/list/video";
 	}
 
 	@RequestMapping(value = "/challenge", method = RequestMethod.POST)
@@ -43,7 +44,8 @@ public class MiscController {
 		user.setChallengeAccepted(true);
 		user.setChallengeProgress((short) 0);
 		userService.update(user);
-		flashService.flashAlert(attr, "You Have Successfully Started the challenge", "success", true);
+		//flashService.flashAlert(attr, "You Have Successfully Started the challenge", "success", true);
+		attr.addFlashAttribute("alertSuccess", "You Have Successfully Started the challenge");
 		return "redirect:/user";
 	}
 }

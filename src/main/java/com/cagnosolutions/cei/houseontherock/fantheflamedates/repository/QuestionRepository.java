@@ -14,6 +14,6 @@ import java.util.List;
 @Repository
 public interface QuestionRepository extends JpaRepository<Question, Long> {
 
-	@Query("SELECT q FROM Question q WHERE q.videoId=:videoId")
+	@Query("SELECT q FROM Question q WHERE q.videoId=:videoId ORDER BY q.sheetOrder ASC")
 	public List<Question> findByVideoId(@Param("videoId") String videoId);
 }

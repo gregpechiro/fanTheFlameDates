@@ -14,7 +14,7 @@
 			<div id="tablePanel" class="panel panel-default">
 				<div class="panel-heading col-sm-12">
 					Videos
-					<a href="/admin/video/upload" class="btn btn-default btn-xs pull-right">Add Video</a>
+					<a href="/admin/upload/video" class="btn btn-default btn-xs pull-right">Add Video</a>
 				</div>
 				<div class="panel-body">
 					<div id="table" class="table-responsive">
@@ -43,18 +43,9 @@
 											</#list>
 											${tags?join(', ')}
 										</td>
-										<!--<td><a href="/admin/view/video?video_uri=${video.uri}">Edit</a></td>-->
 										<td>
-											<form method="post" action="/admin/del/video">
-												<a class="btn btn-default btn-xs" href="/admin/view/video?video_uri=${video.uri}">
-													<i class="fa fa-edit"></i>
-												</a>
-												<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-												<input type="hidden" name="videoUri" value="${video.uri}">
-												<button class="btn btn-default btn-xs" type="submit">
-													<i class="fa fa-trash-o"></i>
-												</button>
-											</form>
+											<p><a href="/admin/edit/video?video_uri=${video.uri}" id="" class="">Edit</a></p>
+											<p><a href="#" class="text-danger videoDel" data-id="${video.uri}">Delete</a></p>
 										</td>
 									</tr>
 								</#list>
@@ -65,10 +56,45 @@
 			</div>
 		</div>
 
+		<div class="modal fade" id="deleteVideoModal" tabindex="-1" role="dialog" aria-labelledby=""  aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true">&times;</span>
+							<span class="sr-only">Close</span>
+						</button>
+						<h4 class="modal-title" id="myModalLabel">Delete Video</h4>
+					</div>
+					<div class="modal-body text-center">
+						<p>Deleting this video will permanently remove it from Vimeo.</p>
+						<p>Are you sure you would like to delete?</p>
+						<form id="deleteVideoForm" method="post" action="/admin/del/video">
+							<a class="btn btn-success"  data-dismiss="modal">
+								No
+							</a>
+							<input type="hidden" id="videoUri" name="videoUri"/>
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+							<button class="btn btn-danger" type="submit">
+								Yes
+							</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<!-- scripts -->
 		<div id="scripts">
 
 			<#include "../../stubs/scripts.html"/>
+
+			<script>
+				$('a.videoDel').click(function() {
+					$('input[id="videoUri"]').val(this.getAttribute('data-id'));
+					$('div[id="deleteVideoModal"]').modal();
+				});
+			</script>
 
 		</div>
 	</body>

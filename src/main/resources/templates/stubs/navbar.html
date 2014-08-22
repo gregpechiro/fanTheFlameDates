@@ -22,32 +22,28 @@
 					${(auth)?string('<a href="register">Register</a>', '<a href="/user">My Account</a>')}
 				</li>
 				<li>
-					${(auth)?string('<a href="/user">Login</a>', '<a href="/logout">Logout</a>')}
+					${(auth)?string('<a href="#" data-toggle="modal" data-target="#loginModal">Login</a>', '<a href="/logout">Logout</a>')}
 				</li>
 			</ul>
 		</div>
 	</div>
 </div>
 
-<#if alert??>
-	<div id="alert" class="col-sm-10 col-sm-offset-1">
+<div id="alerts" class="container">
+	<#if alert??>
 		<div class="alert alert-info alert-dismissable text-center">
 			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 			${alert}
 		</div>
-	</div>
-<#elseif alertError??>
-	<div id="alert" class="col-sm-10 col-sm-offset-1">
+		<#elseif alertError??/>
 		<div class="alert alert-danger alert-dismissable text-center">
 			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 			${alertError}
 		</div>
-	</div>
-<#elseif alertSuccess??>
-	<div id="alert" class="col-sm-10 col-sm-offset-1">
+		<#elseif alertSuccess??/>
 		<div class="alert alert-success alert-dismissable text-center">
 			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 			${alertSuccess}
 		</div>
-	</div>
-</#if>
+	</#if>
+</div>

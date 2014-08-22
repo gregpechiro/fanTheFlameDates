@@ -38,25 +38,6 @@ public class MainController {
 		return "home";
 	}
 
-	/*@RequestMapping(value = "/resetpass", method = RequestMethod.GET)
-    public String resetpassForm() {
-        return "resetpass";
-    }
-
-    @RequestMapping(value = "/resetpass", method = RequestMethod.POST)
-    public String resetpassForm(@RequestParam("username") String username, @RequestParam("email") String email) {
-        User user = userService.findById(username);
-        if(user != null) {
-            if(email.equals(user.getEmail())) {
-                String hash = user.getPassword().substring(1, 9);
-                // i have decided upon something
-                // we will use oauth2 with google, or twitter
-                // for password resetting.
-            }
-        }
-        return "resetpass";
-    }*/
-
 	@RequestMapping(value="/register", method=RequestMethod.GET)
 	public String registerForm(Model model) {
 		return "redirect:/home?register";
@@ -71,17 +52,20 @@ public class MainController {
 			user.setRole("ROLE_USER");
 			user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
 			userService.insert(user);
-			flashService.flash(attr, "register.success");
-			return "redirect:/home";
+			//flashService.flash(attr, "register.success");
+			attr.addFlashAttribute("alertSuccess", "Successfully Registered. Please login");
+			return "redirect:/home?login=true";
 		}
-		flashService.flash(attr, "register.error");
+		//flashService.flash(attr, "register.error");
+		attr.addFlashAttribute("alertError", "Error registering");
 		return "redirect:/home?register=true";
 	}
 
 	@RequestMapping(value="/login")
 	public String login(@RequestParam(value="error", required=false) String error, RedirectAttributes attr) {
 		if (error != null) {
-			flashService.flash(attr, "login.error");
+			//flashService.flash(attr, "login.error");
+			attr.addFlashAttribute("alertError", "Error logging you in");
 		}
 		return ("redirect:/home?login=true");
 	}
@@ -102,10 +86,12 @@ public class MainController {
 	public String contactSubmit(Email email, RedirectAttributes attr) {
 		if (email.emailCheck()) {
 			mailService.sendSimpleEmail("info@fantheflamedates.com", email.subject(), email.toString(), "gregpechiro@gmail.com");
-			flashService.flashAlert(attr, "Your message was successfully sent", "success", true);
+			//flashService.flashAlert(attr, "Your message was successfully sent", "success", true);
+			attr.addFlashAttribute("alertSuccess", "Your message was successfully sent");
 			return "redirect:/contact";
 		}
-		flashService.flashAlert(attr, "There was an error sending your message. Please try again", "danger", true);
+		//flashService.flashAlert(attr, "There was an error sending your message. Please try again", "danger", true);
+		attr.addFlashAttribute("alertDanger", "There was an error sending your message. Please try again");
 		return "redirect:/contact";
 	}
 
