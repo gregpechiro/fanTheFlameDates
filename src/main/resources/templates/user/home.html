@@ -12,56 +12,74 @@
 
 		<!-- content -->
 		<div id="content" class="container">
-			<div class="container">
-				<div id="progress" class="col-sm-4" >
-					<#if user.challengeAccepted>
-						<label>Chalenge Progress</label>
-						<div class="progress">
-							<div class="progress-bar progress-bar-danger" role="progressbar"
-								 aria-valuenow="${user.challengeProgress}" aria-valuemin="0" aria-valuemax="12"
-								 style="width: ${(user.challengeProgress / 12) * 100}%;">
-							</div>
+			<div id="progress" class="col-sm-12" >
+				<#if user.challengeAccepted>
+					<label>Challenge Progress</label>
+					<div class="progress">
+						<div class="progress progress-bar progress-bar-danger" role="progressbar"
+							 aria-valuenow="${user.challengeProgress}" aria-valuemin="0" aria-valuemax="12"
+							 style="width: ${(user.challengeProgress / 12) * 100}%;">
 						</div>
-					<#else>
-						<form id="beginChallengeForm" role="form" method="post" action="/challenge">
-							<input type="hidden" id="username" name="username" class="form-control"
-								   placeholder="" required="" value="${user.username}"/>
-							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-							<button class="btn btn-md btn-primary btn-block" type="submit">Begin Challenge</button>
-						</form>
-					</#if>
-				</div>
-				<div class="col-sm-4">
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							My Account
-							<a href="/user/password" class="btn btn-xs btn-default pull-right">
-								Change Password
-							</a>
-						</div>
-						<div class="panel-body">
-							<form role="form" method="post" action="/user">
-								<div class="form-group">
-									<input type="text" id="name" name="name" value="${user.name}" class="form-control" placeholder="Name" required="true"/>
+					</div>
+					<#else/>
+					<form id="beginChallengeForm" role="form" method="post" action="/challenge">
+						<input type="hidden" id="username" name="username" class="form-control"
+							   placeholder="" required="" value="${user.username}"/>
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+						<button class="btn btn-md btn-primary btn-block" type="submit">Begin Challenge</button>
+					</form>
+				</#if>
+			</div>
+			<div class="col-sm-7">
+				<div id="recent" class="panel panel-default">
+					<div class="panel-heading text-center">Recently Viewed</div>
+					<div class="panel-body">
+						<#list recent?reverse as video>
+							<div class="row">
+								<div class="col-xs-6">
+									<a href="${video.videoUri}" class="thumbnail">
+										<img src="${video.thumb}" class="img-responsive img-thumbnail" alt="Video Thumbnail">
+									</a>
 								</div>
-								<div class="input-group">
-									<input type="text" id="username" name="username" value="${user.username}" class="form-control" disabled="true" />
+								<div class="col-xs-6">
+									<p><strong>${video.name}</strong></p>
+									<p>${video.description}</p>
+								</div>
+							</div>
+						</#list>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-offset-1 col-sm-4">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						My Account
+						<a href="/user/password" class="btn btn-xs btn-default pull-right">
+							Change Password
+						</a>
+					</div>
+					<div class="panel-body">
+						<form role="form" method="post" action="/user">
+							<div class="form-group">
+								<input type="text" id="name" name="name" value="${user.name}" class="form-control" placeholder="Name" required="true"/>
+							</div>
+							<div class="input-group">
+								<input type="text" id="username" name="username" value="${user.username}" class="form-control" disabled="true" />
                                 <span class="input-group-btn">
                                     <a href="/user/username" class="btn btn-default">Change</a>
                                 </span>
-								</div>
-								<br/>
-								<div class="form-group">
-									<input type="email" id="email" name="email" value="${user.email}" class="form-control" placeholder="Email" required="true" />
-								</div>
-								<input type="hidden" name="role" value="${user.role}" />
-								<input type="hidden" name="active" value="${(user.active == true??)?string('true','false')}" />
-								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-								<button class="btn btn-md btn-primary btn-block" type="submit">Save</button>
-								<br/>
-								<a href="/user" class="btn btn-default btn-block">Back</a>
-							</form>
-						</div>
+							</div>
+							<br/>
+							<div class="form-group">
+								<input type="email" id="email" name="email" value="${user.email}" class="form-control" placeholder="Email" required="true" />
+							</div>
+							<input type="hidden" name="role" value="${user.role}" />
+							<input type="hidden" name="active" value="${(user.active == true??)?string('true','false')}" />
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+							<button class="btn btn-md btn-primary btn-block" type="submit">Save</button>
+							<br/>
+							<a href="/user" class="btn btn-default btn-block">Back</a>
+						</form>
 					</div>
 				</div>
 			</div>

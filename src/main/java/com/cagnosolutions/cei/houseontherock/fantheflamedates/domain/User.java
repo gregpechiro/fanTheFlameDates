@@ -1,6 +1,7 @@
 package com.cagnosolutions.cei.houseontherock.fantheflamedates.domain;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 
 @Entity
 @Table(name="user")
@@ -16,10 +17,12 @@ public class User {
 	private boolean challengeAccepted;
 	private short challengeProgress;
 	private boolean challengeComplete;
+	private ArrayList<String> recentlyViewed;
 	
 	public User() {}
 
-	public User(String username, String password, String name, String email, String role, boolean active, boolean challengeAccepted, short challengeProgress, boolean challengeComplete) {
+	public User(String username, String password, String name, String email, String role, boolean active,
+				boolean challengeAccepted, short challengeProgress, boolean challengeComplete, ArrayList<String> recentlyViewed) {
 		this.username = username;
 		this.password = password;
 		this.name = name;
@@ -29,6 +32,12 @@ public class User {
 		this.challengeAccepted = challengeAccepted;
 		this.challengeProgress = challengeProgress;
 		this.challengeComplete = challengeComplete;
+		this.recentlyViewed = recentlyViewed;
+	}
+
+	public String toString() {
+		return String.format("username: %s, password: %s, name: %s, email: %s, role: %s, active: %b",
+				username, password, name, email, role, active);
 	}
 
 	public String getUsername() {
@@ -107,15 +116,27 @@ public class User {
 		this.challengeAccepted = challengeAccepted;
 	}
 
+	public ArrayList<String> getRecentlyViewed() {
+		return recentlyViewed;
+	}
+
+	public void setRecentlyViewed(ArrayList<String> recentlyViewed) {
+		this.recentlyViewed = recentlyViewed;
+	}
+
 	public void advanceChallenge() {
 		if (challengeAccepted || !challengeComplete) {
 			challengeProgress++;
 		}
 	}
 
-	public String toString() {
-        return String.format("username: %s, password: %s, name: %s, email: %s, role: %s, active: %b",
-                username, password, name, email, role, active);
-    }
+	public void addRecentlyViewed(String videoUri) {
+		if (!recentlyViewed.contains(videoUri)) {
+			recentlyViewed.add(videoUri);
+			if (recentlyViewed.size() > 4) {
+				recentlyViewed.remove(0);
+			}
+		}
+	}
 
 }

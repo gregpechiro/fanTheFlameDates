@@ -1,8 +1,10 @@
 package com.cagnosolutions.cei.houseontherock.fantheflamedates.controller.user;
 
 import com.cagnosolutions.cei.houseontherock.fantheflamedates.domain.User;
+import com.cagnosolutions.cei.houseontherock.fantheflamedates.domain.VimeoVideo;
 import com.cagnosolutions.cei.houseontherock.fantheflamedates.service.FlashService;
 import com.cagnosolutions.cei.houseontherock.fantheflamedates.service.UserService;
+import com.cagnosolutions.cei.houseontherock.fantheflamedates.service.VimeoVideoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller("userController")
 public class UserController {
@@ -25,6 +29,9 @@ public class UserController {
 	@Autowired
 	private FlashService flashService;
 
+	@Autowired
+	private VimeoVideoService vimeoVideoService;
+
     // GET home
 	@RequestMapping(value="/user", method=RequestMethod.GET)
 	public String home(Principal principal, Model model) {
@@ -33,7 +40,13 @@ public class UserController {
             return "redirect:/admin";
         }
 		model.addAttribute("auth", (principal == null));
-		model.addAttribute("user", userService.findById(username));
+		User user = userService.findById(username);
+		model.addAttribute("user", user);
+		List<VimeoVideo> recent = new ArrayList<>();
+		for (String videoUri : user.getRecentlyViewed()) {
+			recent.add(vimeoVideoService.findById(videoUri));
+		}
+		model.addAttribute("recent", recent);
 		return "user/home";
 	}
 

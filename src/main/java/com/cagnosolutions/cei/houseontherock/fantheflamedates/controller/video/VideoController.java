@@ -3,7 +3,6 @@ package com.cagnosolutions.cei.houseontherock.fantheflamedates.controller.video;
 import com.cagnosolutions.cei.houseontherock.fantheflamedates.domain.VimeoAPI;
 import com.cagnosolutions.cei.houseontherock.fantheflamedates.service.QuestionService;
 import com.cagnosolutions.cei.houseontherock.fantheflamedates.service.UserService;
-import com.cagnosolutions.cei.houseontherock.fantheflamedates.service.VideoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,9 +19,6 @@ import java.security.Principal;
 
 @Controller(value="userVideoController")
 public class VideoController {
-
-	@Autowired
-	private VideoService videoService;
 
 	@Autowired
 	private QuestionService questionService;

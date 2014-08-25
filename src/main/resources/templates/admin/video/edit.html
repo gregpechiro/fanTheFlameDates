@@ -36,6 +36,8 @@
 									style="resize:none;" placeholder="Tags" ><#assign tags = [] /><#list video.tags as tag><#assign tags = tags + [tag.name] /></#list>${tags?join(', ')}</textarea>
 							</div>
 		        			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+							<input type="hidden" name="thumb" value="${(video.pictures.sizes?last.link)!}">
+							<input type="hidden" name="videoUri" value="${(video.uri)!}">
 							<div class="form-group">
 								<button class="btn btn-md btn-primary btn-block" type="submit">Save</button>
 							</div>

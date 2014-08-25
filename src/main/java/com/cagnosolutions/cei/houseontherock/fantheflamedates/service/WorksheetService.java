@@ -1,4 +1,5 @@
-package com.cagnosolutions.cei.houseontherock.fantheflamedates.service;/**
+package com.cagnosolutions.cei.houseontherock.fantheflamedates.service;
+/**
  * Created by greg on 7/29/14.
  */
 

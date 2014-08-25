@@ -18,7 +18,7 @@ public class Worksheet {
 	private Long id;
 
 	private String userId;
-	private String videoId;
+	private String videoUri;
 	private String answers;
 	private boolean save;
 	private boolean email;
@@ -27,9 +27,9 @@ public class Worksheet {
 	public Worksheet() {
 	}
 
-	public Worksheet(String userId, String videoId, String answers, boolean save, boolean email, boolean send) {
+	public Worksheet(String userId, String videoUri, String answers, boolean save, boolean email, boolean send) {
 		this.userId = userId;
-		this.videoId = videoId;
+		this.videoUri = videoUri;
 		this.answers = answers;
 		this.save = save;
 		this.email = email;
@@ -56,12 +56,12 @@ public class Worksheet {
 		this.userId = userId;
 	}
 
-	public String getVideoId() {
-		return videoId;
+	public String getVideoUri() {
+		return videoUri;
 	}
 
-	public void setVideoId(String videoId) {
-		this.videoId = videoId;
+	public void setVideoUri(String videoUri) {
+		this.videoUri = videoUri;
 	}
 
 	public String getAnswers() {

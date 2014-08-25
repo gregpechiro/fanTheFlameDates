@@ -1,16 +1,13 @@
-/*
 package com.cagnosolutions.cei.houseontherock.fantheflamedates.repository;
-*/
 /**
- * Created by greg on 7/3/14.
- *//*
+ * Created by greg on 8/25/14.
+ */
 
-
-import com.cagnosolutions.cei.houseontherock.fantheflamedates.domain.Video;
+import com.cagnosolutions.cei.houseontherock.fantheflamedates.domain.VimeoVideo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface VideoRepository extends JpaRepository<Video, Long> {
+public interface VimeoVideoRepository extends JpaRepository<VimeoVideo, String> {
 
-}*/
+}

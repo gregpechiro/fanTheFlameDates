@@ -1,25 +1,41 @@
 package com.cagnosolutions.cei.houseontherock.fantheflamedates.domain;
 
-import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.util.ArrayList;
 
 /**
  * Created by greg on 7/23/14.
  */
+
+@Entity
+@Table(name = "video")
 public class VimeoVideo {
 
-	private String name;
-	private String description;
+	@Id
 	private String videoUri;
-	private List<String> tags;
+
+	private String name;
+
+	@Column(length = 1000)
+	private String description;
+
+	@Column(length = 1000)
+	private ArrayList<String> tags;
+
+	private String thumb;
 
 	public VimeoVideo() {
 	}
 
-	public VimeoVideo(String name, String description, String videoUri, List<String> tags) {
+	public VimeoVideo(String name, String description, String videoUri, ArrayList<String> tags, String thumb) {
 		this.name = name;
 		this.description = description;
 		this.videoUri = videoUri;
 		this.tags = tags;
+		this.thumb = thumb;
 	}
 
 	public String getName() {
@@ -46,11 +62,19 @@ public class VimeoVideo {
 		this.videoUri = videoUri;
 	}
 
-	public List<String> getTags() {
+	public ArrayList<String> getTags() {
 		return tags;
 	}
 
-	public void setTags(List<String> tags) {
+	public void setTags(ArrayList<String> tags) {
 		this.tags = tags;
+	}
+
+	public String getThumb() {
+		return thumb;
+	}
+
+	public void setThumb(String thumb) {
+		this.thumb = thumb;
 	}
 }

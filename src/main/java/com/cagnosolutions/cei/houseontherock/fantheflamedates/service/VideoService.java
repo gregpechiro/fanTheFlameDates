@@ -1,6 +1,9 @@
-package com.cagnosolutions.cei.houseontherock.fantheflamedates.service;/**
+/*
+package com.cagnosolutions.cei.houseontherock.fantheflamedates.service;*/
+/**
  * Created by greg on 7/3/14.
- */
+ *//*
+
 
 import com.cagnosolutions.cei.houseontherock.fantheflamedates.domain.Video;
 import com.cagnosolutions.cei.houseontherock.fantheflamedates.repository.VideoRepository;
@@ -55,3 +58,4 @@ public class VideoService {
 	}
 
 }
+*/

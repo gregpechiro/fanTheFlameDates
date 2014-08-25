@@ -22,7 +22,6 @@
 							<thead>
 								<tr>
 									<th>Name</th>
-									<th>URI</th>
 									<th>Description</th>
 									<th>Link</th>
 									<th>Tags</th>
@@ -33,7 +32,6 @@
 								<#list videos.data as video>
 									<tr>
 										<td>${video.name}</td>
-										<td>${video.uri}</td>
 										<td>${(video.description)!}</td>
 										<td><a href="${video.link}" id="" class="">Watch</a></td>
 										<td>

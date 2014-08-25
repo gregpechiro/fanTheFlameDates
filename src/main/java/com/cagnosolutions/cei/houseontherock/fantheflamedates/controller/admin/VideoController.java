@@ -3,8 +3,8 @@ package com.cagnosolutions.cei.houseontherock.fantheflamedates.controller.admin;
 import com.cagnosolutions.cei.houseontherock.fantheflamedates.domain.VimeoAPI;
 import com.cagnosolutions.cei.houseontherock.fantheflamedates.domain.VimeoVideo;
 import com.cagnosolutions.cei.houseontherock.fantheflamedates.service.FlashService;
-import com.cagnosolutions.cei.houseontherock.fantheflamedates.service.VideoService;
 import com.cagnosolutions.cei.houseontherock.fantheflamedates.service.QuestionService;
+import com.cagnosolutions.cei.houseontherock.fantheflamedates.service.VimeoVideoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,13 +18,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class VideoController {
 
 	@Autowired
-	private VideoService videoService;
-
-	@Autowired
 	private QuestionService questionService;
 
 	@Autowired
 	private FlashService flashService;
+
+	@Autowired
+	private VimeoVideoService vimeoVideoService;
 
 	// GET list
 	@RequestMapping(value = "/list/video", method = RequestMethod.GET)
@@ -63,6 +63,7 @@ public class VideoController {
 			e.printStackTrace();
 		}
 		//flashService.flash(attr, "update.success");
+		vimeoVideoService.insert(video);
 		attr.addFlashAttribute("alertSuccess", "Video updated successfully");
 		return "redirect:/admin/edit/video?video_uri=" + video.getVideoUri();
 	}
@@ -79,7 +80,7 @@ public class VideoController {
 		return "admin/video/upload";
 	}
 
-	//
+	// POST delete
 	@RequestMapping(value="/del/video", method = RequestMethod.POST)
 	public String delete(@RequestParam(value="videoUri") String videoUri, RedirectAttributes attr) {
 		try {

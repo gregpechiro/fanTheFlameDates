@@ -32,6 +32,7 @@ public class MiscController {
 	public String worksheet(Worksheet worksheet, RedirectAttributes attr) {
 		User user = userService.findById(worksheet.getUserId());
 		user.advanceChallenge();
+		user.addRecentlyViewed(worksheet.getVideoUri());
 		userService.update(user);
 		worksheetService.add(worksheet);
 		attr.addFlashAttribute("alertSuccess", "Thanks for watching.");

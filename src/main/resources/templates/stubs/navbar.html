@@ -19,7 +19,7 @@
 					<a href="#">Forum</a>
 				</li>
 				<li>
-					${(auth)?string('<a href="register">Register</a>', '<a href="/user">My Account</a>')}
+					${(auth)?string('<a href="#" data-toggle="modal" data-target="#registerModal">Register</a>', '<a href="/user">My Account</a>')}
 				</li>
 				<li>
 					${(auth)?string('<a href="#" data-toggle="modal" data-target="#loginModal">Login</a>', '<a href="/logout">Logout</a>')}

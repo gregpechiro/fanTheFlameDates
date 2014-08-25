@@ -1,11 +1,14 @@
+/*
 package com.cagnosolutions.cei.houseontherock.fantheflamedates.domain;
 
 
 import javax.persistence.*;
 
+*/
 /**
  * Created by greg on 7/3/14.
- */
+ *//*
+
 
 @Entity
 @Table(name = "video")
@@ -89,3 +92,4 @@ public class Video {
 		this.thumb = thumb;
 	}
 }
+*/
