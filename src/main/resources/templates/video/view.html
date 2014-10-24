@@ -36,7 +36,7 @@
 								<form id="worksheet">
 									<#list questions as question>
 										<#switch question.inType>
-											<#case "radio">
+											<#case "radio"/>
 												<label id="question_${i}">${question.askedQuestion}?</label>
 												<#list question.options as option>
 													<div class="radio">
@@ -46,8 +46,8 @@
 														</label>
 													</div>
 												</#list>
-												<#break>
-											<#case "checkbox">
+												<#break/>
+											<#case "checkbox"/>
 												<label id="question_${i}">${question.askedQuestion} (Select all that apply)</label>
 												<#list question.options as option>
 													<div class="checkbox">
@@ -57,14 +57,14 @@
 														</label>
 													</div>
 												</#list>
-												<#break>
-											<#case "textarea">
+												<#break/>
+											<#case "textarea"/>
 												<label id="question_${i}">${question.askedQuestion}</label>
 												<div class="form-group">
 													<textarea name="${question.askedQuestion}" id="question_${i}" class="form-control" rows="5" style="resize:none;"></textarea>
 												</div>
-												<#break>
-											<#default>
+												<#break/>
+											<#default/>
 												<label id="question_${i}">${question.askedQuestion}?</label>
 												<div class="form-group">
 													<input name="${question.askedQuestion}" id="question_${i}" type="${question.inType}" class="form-control" required="true"/>
